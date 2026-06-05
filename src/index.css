@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+/* Snap scroll setup */
+.snap-content {
+    scroll-snap-type: y mandatory;
+}
+
+/* Simple container */
+.container {
+    @apply max-w-6xl mx-auto px-10;
+}
+
+section {
+    @apply min-h-screen flex items-start justify-center pt-40;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+body {
+    @apply bg-white text-gray-900 antialiased;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.major-mono {
+    font-family: "Major Mono Display", monospace;
+    text-transform: none;
+    font-weight: 600;
+    font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @apply major-mono;
+}
+
+.section-title {
+    padding-bottom: 2rem;
+    font-size: x-large;
+}
+
+/* Hide scrollbar for portfolio horizontal scroll */
+#portfolio > .container > div > div {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#portfolio > .container > div > div::-webkit-scrollbar {
+    display: none;
+}
+
+p {
+    margin-bottom: 1rem;
+}
