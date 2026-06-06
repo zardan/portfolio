@@ -26,7 +26,7 @@ export default function ProjectCard({ project }) {
             }}
         >
             <img
-                src={project.images[imageIndex]}
+                src={import.meta.env.BASE_URL + project.images[imageIndex]}
                 alt={project.title}
                 className="w-full aspect-square object-cover transition-opacity duration-100"
             />
