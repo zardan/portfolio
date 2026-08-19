@@ -7,7 +7,7 @@ import Contact from './components/Contact'
 import { useActiveSection } from './hooks/useActiveSection'
 
 const sections = [
-  { name: 'Om mig', id: 'om-mig' },
+ // { name: 'Om mig', id: 'om-mig' },
   { name: 'Portfolio', id: 'portfolio' },
   //{ name: 'Blog', id: 'blog' },
   { name: 'Kontakt', id: 'kontakt' }
@@ -24,7 +24,7 @@ export default function App() {
 
       {/* Main Content */}
       <main className="w-4/5 ml-auto overflow-y-scroll h-screen snap-content">
-        <About />
+        {/* <About /> */}
         <Portfolio />
         {/* <Blog /> */}
         <Contact />

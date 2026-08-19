@@ -8,9 +8,6 @@ export default function Sidebar({ activeSection, sections }) {
         <h1 className="text-3xl p-2 my-5 major-mono-display-regular">
           Sara Cedernaes
         </h1>
-        <p className="text-sm text-gray-600">
-            Skapa saker. Analoga som digitala. Utforska material. Se vad som händer. 
-        </p>
       </div>
 
       {/* Navigation */}
