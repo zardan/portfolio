@@ -3,9 +3,9 @@ export const projects = [
         id: 'bowls',
         title: 'Skålar i stengods',
         images: [
-            '/images/bowl-1.jpeg',
-            '/images/bowl-2.jpeg',
-            '/images/bowl-3.jpeg'
+            'images/bowl-1.jpeg',
+            'images/bowl-2.jpeg',
+            'images/bowl-3.jpeg'
         ],
         description: '',
         link: '#',
@@ -15,8 +15,8 @@ export const projects = [
         id: 'annie',
         title: 'Namnskylt i keramik',
         images: [
-            '/images/annie-1.jpeg',
-            '/images/annie-2.jpeg'
+            'images/annie-1.jpeg',
+            'images/annie-2.jpeg'
         ],
         description: '',
         link: '#',
@@ -26,7 +26,7 @@ export const projects = [
         id: 'kudde',
         title: 'Tuftad kudde',
         images: [
-            '/images/kudde.jpeg'
+            'images/kudde.jpeg'
         ],
         description: '',
         link: '#',
@@ -36,7 +36,7 @@ export const projects = [
         id: 'candleholders',
         title: 'Ljusstakar i keramik',
         images: [
-            '/images/candles.jpeg'
+            'images/candles.jpeg'
         ],
         description: '',
         link: '#',
