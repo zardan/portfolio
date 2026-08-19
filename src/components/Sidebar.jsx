@@ -6,7 +6,7 @@ export default function Sidebar({ activeSection, sections }) {
       {/* Name and intro */}
       <div>
         <h1 className="text-3xl p-2 my-5 major-mono-display-regular">
-          Sara Cedernaes
+          Sara Cedernaes &#9658;
         </h1>
       </div>
 
