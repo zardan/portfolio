@@ -8,6 +8,9 @@ export default function Sidebar({ activeSection, sections }) {
         <h1 className="text-3xl p-2 my-5 major-mono-display-regular">
           Sara Cedernaes
         </h1>
+        <p>
+          Nyckelviksskolan 2026-2027
+        </p>
       </div>
 
       {/* Navigation */}
