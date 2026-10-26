@@ -18,7 +18,7 @@ export default function Contact() {
           ref={titleRef}
           className={`section-title reveal ${titleVisible ? 'reveal-visible' : ''}`}
         >
-          säg hej?
+          Här finns jag
         </h2>
         <ul className="max-w-3xl text-sm border-t border-ink/20">
           {links.map((link) => (

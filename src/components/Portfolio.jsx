@@ -29,7 +29,7 @@ export default function Portfolio() {
         </div>
 
         <p className="mt-10 text-sm max-w-lg">
-          Gillar du något här? Hör av dig om du vill köpa något eller beställa något eget.{' '}
+          Jag tar emot beställningar. Säg till om något fångar ditt öga.{' '}
           <a href="#kontakt" className="underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">Kontakt →</a>
         </p>
       </div>
