@@ -3,8 +3,9 @@ import { useReveal } from '../hooks/useReveal'
 
 const links = [
   { label: 'e-post', text: 'sara.cedernaes@gmail.com', href: 'mailto:sara.cedernaes@gmail.com' },
+  { label: 'linkedin', text: 'Sara Viktoria Cedernaes', href: 'https://www.linkedin.com/in/sara-viktoria/' },
   { label: 'instagram', text: '@saracedernaes', href: 'https://www.instagram.com/saracedernaes/' },
-  { label: 'linkedin', text: 'sara-viktoria', href: 'https://www.linkedin.com/in/sara-viktoria/' }
+  { label: 'github', text: '@zardan', href: 'https://github.com/zardan' }
 ]
 
 export default function Contact() {
@@ -15,9 +16,9 @@ export default function Contact() {
       <div className="container">
         <h2
           ref={titleRef}
-          className={`section-title text-5xl md:text-8xl lg:text-9xl reveal ${titleVisible ? 'reveal-visible' : ''}`}
+          className={`section-title reveal ${titleVisible ? 'reveal-visible' : ''}`}
         >
-          säg hej.
+          säg hej?
         </h2>
         <ul className="max-w-3xl text-sm border-t border-ink/20">
           {links.map((link) => (
