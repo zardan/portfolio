@@ -8,7 +8,7 @@ export default function About() {
         <section id="om-mig">
             <div ref={ref} className={`container reveal ${visible ? 'reveal-visible' : ''}`}>
                 <h2 className="section-title">
-                    Om mig
+                    om mig
                 </h2>
                 <div className="max-w-2xl text-sm md:text-base leading-relaxed">
                     <p>

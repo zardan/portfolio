@@ -8,7 +8,7 @@ export default function Intro() {
                     Keramik · Textil · Ingenjörskonst
                 </p>
                 <h2 className="text-accent text-4xl md:text-5xl lg:text-6xl xl:text-8xl">
-                    Ingenjör<br />som lär sig<br />lera.
+                    ingenjör<br />som lär sig<br />lera.
                 </h2>
                 <div className="mt-10 flex items-center gap-4">
                     <span className="block shrink-0 w-4 h-4 rounded-full bg-accent" aria-hidden="true" />
