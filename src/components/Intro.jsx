@@ -7,7 +7,7 @@ export default function Intro() {
                 <p className="text-xs uppercase tracking-widest text-ink/60 mb-6">
                     Keramik · Textil · Ingenjörskonst
                 </p>
-                <h2 className="text-accent text-4xl md:text-6xl lg:text-8xl">
+                <h2 className="text-accent text-4xl md:text-5xl lg:text-6xl xl:text-8xl">
                     ingenjör<br />som lär sig<br />lera.
                 </h2>
                 <div className="mt-10 flex items-center gap-4">

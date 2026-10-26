@@ -59,11 +59,11 @@ export default function Sidebar({ activeSection, sections }) {
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden md:flex w-1/5 h-screen fixed left-0 top-0 bg-paper p-10 flex-col justify-start border-r border-ink/15">
+      <div className="hidden md:flex md:w-64 lg:w-72 xl:w-80 h-screen fixed left-0 top-0 bg-paper p-8 xl:p-10 flex-col justify-start border-r border-ink/15">
         {/* Name and intro */}
         <div>
           <a href="#start">
-            <h1 className="text-2xl lg:text-3xl my-5 fade-in">
+            <h1 className="text-2xl xl:text-3xl my-5 break-words fade-in">
               sara<br />cedernaes
             </h1>
           </a>

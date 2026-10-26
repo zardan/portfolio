@@ -16,7 +16,8 @@ const sections = [
   { name: 'kontakt', id: 'kontakt' }
 ]
 
-const sectionIds = sections.map(s => s.id)
+// 'start' (the intro) is observed too, so no menu item is marked at the top of the page
+const sectionIds = ['start', ...sections.map(s => s.id)]
 
 export default function App() {
   const activeSection = useActiveSection(sectionIds)
@@ -27,7 +28,7 @@ export default function App() {
       <Sidebar activeSection={activeSection} sections={sections} />
 
       {/* Main Content */}
-      <main className="w-full md:w-4/5 md:ml-auto overflow-y-scroll h-screen snap-content pt-16 md:pt-0">
+      <main className="w-full md:flex-1 md:min-w-0 md:ml-64 lg:ml-72 xl:ml-80 overflow-y-scroll h-screen snap-content pt-16 md:pt-0">
         <Intro />
         <Portfolio />
         <About />
