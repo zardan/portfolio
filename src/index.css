@@ -41,9 +41,9 @@ h3,
 h4,
 h5,
 h6 {
-    @apply font-display font-bold lowercase;
-    letter-spacing: -0.03em;
-    line-height: 0.95;
+    @apply font-display lowercase;
+    font-weight: 600;
+    line-height: 1.05;
 }
 
 .section-title {

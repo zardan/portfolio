@@ -34,7 +34,7 @@ export default function WorkTile({ project, image, number, isFirst, index = 0 })
             <figcaption
                 className={`absolute inset-x-0 bottom-0 px-2 py-1.5 md:p-4 bg-paper/90 text-ink transition-opacity duration-300 md:opacity-0 md:group-hover:opacity-100 ${isFirst ? '' : 'hidden md:block'}`}
             >
-                <span className="block font-display font-bold lowercase text-sm md:text-lg leading-tight">{project.title}</span>
+                <span className="block font-normal text-xs md:text-sm leading-tight">{project.title}</span>
                 {project.tags?.length > 0 && (
                     <span className="hidden md:block text-xs text-ink/60 mt-1 tracking-wide uppercase">
                         {project.tags.join(' · ')}

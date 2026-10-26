@@ -6,12 +6,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        paper: '#ece8e1',
-        ink: '#1f1d1b',
-        accent: '#e0401d'
+        paper: 'rgb(229, 224, 216)',
+        ink: 'rgb(19, 17, 16)',
+        accent: 'rgb(184, 43, 12)'
       },
       fontFamily: {
-        display: ['"Familjen Grotesk"', 'sans-serif'],
+        display: ['"Major Mono Display"', 'monospace'],
         mono: ['"Roboto Mono"', 'monospace']
       }
     }
