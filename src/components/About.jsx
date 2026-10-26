@@ -18,7 +18,7 @@ export default function About() {
                         Jag tycker om att bygga saker och lösa problem, men också om att skapa fritt med händerna. På senare tid har det blivit mycket hantverk i form av keramik, stickning och tuftning.
                     </p>
                     <p>
-                        För mig liknar ingenjörsarbete och hantverk varandra. Båda handlar om att testa idéer, nörda ner sig i verktyg, material och tekniker. Samtidigt som de såklart kan ha lite olika processer och syften.
+                        För mig liknar ingenjörsarbete och hantverk varandra. Båda handlar om att testa idéer, nörda ner sig i verktyg, material och tekniker. Samtidigt har de förstås olika processer och syften.
                     </p>
                 </div>
             </div>
