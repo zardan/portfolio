@@ -9,8 +9,8 @@ import Contact from './components/Contact'
 import { useActiveSection } from './hooks/useActiveSection'
 
 const sections = [
-  { name: 'arbeten', id: 'portfolio' },
   { name: 'om mig', id: 'om-mig' },
+  { name: 'på sistone', id: 'portfolio' },
   { name: 'cv', id: 'cv' },
   //{ name: 'Blog', id: 'blog' },
   { name: 'kontakt', id: 'kontakt' }
@@ -30,8 +30,8 @@ export default function App() {
       {/* Main Content */}
       <main className="w-full md:flex-1 md:min-w-0 md:ml-64 lg:ml-72 xl:ml-80 overflow-y-scroll h-screen snap-content pt-16 md:pt-0">
         <Intro />
-        <Portfolio />
         <About />
+        <Portfolio />
         <CV />
         {/* <Blog /> */}
         <Contact />

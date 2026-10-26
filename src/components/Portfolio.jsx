@@ -17,7 +17,7 @@ export default function Portfolio() {
           ref={titleRef}
           className={`section-title reveal ${titleVisible ? 'reveal-visible' : ''}`}
         >
-          arbeten
+          på sistone
         </h2>
 
         <div className="work-grid-wrap">
@@ -27,6 +27,11 @@ export default function Portfolio() {
             ))}
           </div>
         </div>
+
+        <p className="mt-10 text-sm max-w-lg">
+          Gillar du något här? Hör av dig om du vill köpa något eller beställa något eget.{' '}
+          <a href="#kontakt" className="underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">Kontakt →</a>
+        </p>
       </div>
     </section>
   )
