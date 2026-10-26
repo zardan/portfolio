@@ -9,11 +9,11 @@ import Contact from './components/Contact'
 import { useActiveSection } from './hooks/useActiveSection'
 
 const sections = [
-  { name: 'arbeten', id: 'portfolio' },
-  { name: 'om mig', id: 'om-mig' },
-  { name: 'cv', id: 'cv' },
+  { name: 'Arbeten', id: 'portfolio' },
+  { name: 'Om mig', id: 'om-mig' },
+  { name: 'CV', id: 'cv' },
   //{ name: 'Blog', id: 'blog' },
-  { name: 'kontakt', id: 'kontakt' }
+  { name: 'Kontakt', id: 'kontakt' }
 ]
 
 // 'start' (the intro) is observed too, so no menu item is marked at the top of the page

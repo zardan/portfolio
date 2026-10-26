@@ -17,7 +17,7 @@ export default function Contact() {
           ref={titleRef}
           className={`section-title text-5xl md:text-8xl lg:text-9xl reveal ${titleVisible ? 'reveal-visible' : ''}`}
         >
-          säg hej.
+          Säg hej.
         </h2>
         <ul className="max-w-3xl text-sm border-t border-ink/20">
           {links.map((link) => (

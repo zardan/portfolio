@@ -9,7 +9,7 @@ export default function CV() {
         <section id="cv">
             <div ref={ref} className={`container reveal ${visible ? 'reveal-visible' : ''}`}>
                 <h2 className="section-title">
-                    cv
+                    CV
                 </h2>
                 <div className="max-w-3xl space-y-12">
                     {cv.map((group) => (

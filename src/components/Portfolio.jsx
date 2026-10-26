@@ -17,7 +17,7 @@ export default function Portfolio() {
           ref={titleRef}
           className={`section-title reveal ${titleVisible ? 'reveal-visible' : ''}`}
         >
-          arbeten
+          Arbeten
         </h2>
 
         <div className="work-grid-wrap">
