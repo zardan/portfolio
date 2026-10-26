@@ -14,32 +14,24 @@ body,
 
 /* Snap scroll setup */
 .snap-content {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
 }
 
 /* Simple container */
 .container {
-    @apply max-w-6xl mx-auto px-10;
+    @apply max-w-6xl mx-auto px-6 md:px-10;
 }
 
 section {
-    @apply min-h-screen flex items-start justify-center pt-40;
+    @apply py-24 md:py-32;
     scroll-snap-align: start;
-    scroll-snap-stop: always;
 }
 
 body {
-    @apply bg-white text-gray-900 antialiased;
+    @apply bg-paper text-ink antialiased;
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     font-weight: 300;
-    font-style: normal;
-}
-
-.major-mono {
-    font-family: "Major Mono Display", monospace;
-    text-transform: none;
-    font-weight: 600;
     font-style: normal;
 }
 
@@ -49,16 +41,39 @@ h3,
 h4,
 h5,
 h6 {
-    @apply major-mono;
+    @apply font-display font-bold lowercase;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
 }
 
 .section-title {
-    padding-bottom: 2rem;
-    font-size: x-large;
+    @apply text-accent text-5xl md:text-7xl pb-10 md:pb-14;
 }
 
 p {
     margin-bottom: 1rem;
+}
+
+/* Work grid: 1×1 tiles are square, larger tiles span columns/rows */
+.work-grid-wrap {
+    container-type: inline-size;
+    --cols: 2;
+    --gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .work-grid-wrap {
+        --cols: 4;
+        --gap: 1.25rem;
+    }
+}
+
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    grid-auto-rows: calc((100cqw - (var(--cols) - 1) * var(--gap)) / var(--cols));
+    grid-auto-flow: dense;
+    gap: var(--gap);
 }
 
 /* Scroll-reveal animation */
@@ -95,5 +110,15 @@ p {
 }
 
 .nav-link:hover {
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .fade-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        animation: none;
+    }
 }

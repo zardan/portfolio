@@ -1,10 +1,14 @@
 import React from 'react'
 import { projects } from '../data/projects'
-import ProjectCard from './ProjectCard'
+import WorkTile from './WorkTile'
 import { useReveal } from '../hooks/useReveal'
 
 export default function Portfolio() {
   const [titleRef, titleVisible] = useReveal()
+
+  const tiles = projects.flatMap((project, p) =>
+    project.images.map((image, i) => ({ project, image, number: p + 1, isFirst: i === 0 }))
+  )
 
   return (
     <section id="portfolio">
@@ -13,13 +17,15 @@ export default function Portfolio() {
           ref={titleRef}
           className={`section-title reveal ${titleVisible ? 'reveal-visible' : ''}`}
         >
-          Portfolio
+          arbeten
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
-          ))}
+        <div className="work-grid-wrap">
+          <div className="work-grid">
+            {tiles.map((tile, index) => (
+              <WorkTile key={tile.image.src} {...tile} index={index} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
