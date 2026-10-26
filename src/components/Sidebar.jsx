@@ -63,7 +63,7 @@ export default function Sidebar({ activeSection, sections }) {
         {/* Name and intro */}
         <div>
           <a href="#start">
-            <h1 className="text-2xl xl:text-3xl my-5 break-words fade-in">
+            <h1 className="text-2xl xl:text-3xl mt-[103px] xl:mt-[87px] mb-5 break-words fade-in">
               sara<br />cedernaes
             </h1>
           </a>
