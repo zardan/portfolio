@@ -2,7 +2,7 @@ import React from 'react'
 import { useReveal } from '../hooks/useReveal'
 
 const links = [
-  { label: 'e-post', text: 'sara.cedernaes@gmail.com', href: 'mailto:sara.cedernaes@gmail.com' },
+  { label: 'e-post', text: 'hello@cedernaes.com', href: 'mailto:hello@cedernaes.com' },
   { label: 'linkedin', text: 'Sara Viktoria Cedernaes', href: 'https://www.linkedin.com/in/sara-viktoria/' },
   { label: 'instagram', text: '@saracedernaes', href: 'https://www.instagram.com/saracedernaes/' },
   { label: 'github', text: '@zardan', href: 'https://github.com/zardan' }
