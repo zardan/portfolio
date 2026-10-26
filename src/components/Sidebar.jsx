@@ -62,8 +62,9 @@ export default function Sidebar({ activeSection, sections }) {
       <div className="hidden md:flex md:w-64 lg:w-72 xl:w-80 h-screen fixed left-0 top-0 bg-paper p-8 xl:p-10 flex-col justify-start border-r border-ink/15">
         {/* Name and intro */}
         <div>
+          {/* Top margins line up the name's baseline with .section-title (index.css); update both together */}
           <a href="#start">
-            <h1 className="text-2xl xl:text-3xl mt-[103px] xl:mt-[87px] mb-5 break-words fade-in">
+            <h1 className="text-2xl xl:text-3xl mt-[72px] lg:mt-[81px] xl:mt-[76px] mb-5 break-words fade-in">
               sara<br />cedernaes
             </h1>
           </a>
