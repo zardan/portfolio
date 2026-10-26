@@ -47,7 +47,7 @@ h6 {
 }
 
 .section-title {
-    @apply text-accent text-5xl md:text-7xl pb-10 md:pb-14;
+    @apply text-accent text-3xl md:text-4xl lg:text-5xl xl:text-6xl pb-10 md:pb-14;
 }
 
 p {
