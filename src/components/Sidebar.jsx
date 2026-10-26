@@ -6,9 +6,9 @@ export default function Sidebar({ activeSection, sections }) {
   return (
     <>
       {/* Mobile top bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-20 bg-white border-b border-gray-200">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-20 bg-paper border-b border-ink/15">
         <div className="flex items-center justify-between px-6 py-4">
-          <h1 className="text-lg">Sara Cedernaes</h1>
+          <a href="#start"><h1 className="text-xl">sara cedernaes</h1></a>
           <button
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -16,17 +16,17 @@ export default function Sidebar({ activeSection, sections }) {
             className="relative w-6 h-4 flex flex-col justify-between shrink-0"
           >
             <span
-              className={`block h-0.5 w-full bg-gray-700 transition-transform duration-300 ${
+              className={`block h-0.5 w-full bg-ink transition-transform duration-300 ${
                 isMenuOpen ? 'translate-y-[7px] rotate-45' : ''
               }`}
             />
             <span
-              className={`block h-0.5 w-full bg-gray-700 transition-opacity duration-300 ${
+              className={`block h-0.5 w-full bg-ink transition-opacity duration-300 ${
                 isMenuOpen ? 'opacity-0' : ''
               }`}
             />
             <span
-              className={`block h-0.5 w-full bg-gray-700 transition-transform duration-300 ${
+              className={`block h-0.5 w-full bg-ink transition-transform duration-300 ${
                 isMenuOpen ? '-translate-y-[7px] -rotate-45' : ''
               }`}
             />
@@ -46,9 +46,9 @@ export default function Sidebar({ activeSection, sections }) {
                   key={section.id}
                   href={`#${section.id}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block text-lg font-bold major-mono"
+                  className="block text-xl font-display font-bold"
                 >
-                  <span className={isActive ? 'bg-gray-700 text-white p-1' : 'text-gray-600 p-1'}>
+                  <span className={isActive ? 'text-accent' : 'text-ink'}>
                     {section.name}
                   </span>
                 </a>
@@ -59,28 +59,32 @@ export default function Sidebar({ activeSection, sections }) {
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden md:flex w-1/5 h-screen fixed left-0 top-0 bg-white p-10 flex-col justify-start border-r border-gray-200">
+      <div className="hidden md:flex md:w-64 lg:w-72 xl:w-80 h-screen fixed left-0 top-0 bg-paper p-8 xl:p-10 flex-col justify-start border-r border-ink/15">
         {/* Name and intro */}
         <div>
-          <h1 className="text-3xl p-2 my-5 fade-in">
-            Sara Cedernaes
-          </h1>
-          <p>
-            Nyckelviksskolan 2026-2027
-          </p>
+          {/* Top margins line up the name's baseline with .section-title (index.css); update both together */}
+          <a href="#start">
+            <h1 className="text-2xl xl:text-3xl mt-[72px] lg:mt-[81px] xl:mt-[76px] mb-5 break-words fade-in">
+              sara<br />cedernaes
+            </h1>
+          </a>
         </div>
 
         {/* Navigation */}
-        <nav className="space-y-3 major-mono mt-8">
+        <nav className="space-y-2 mt-12">
           {sections.map((section) => {
             const isActive = activeSection === section.id
             return (
               <a
                 key={section.id}
                 href={`#${section.id}`}
-                className="nav-link flex items-center text-lg font-bold"
+                className="nav-link flex items-center gap-2 text-xl font-display font-bold"
               >
-                <span className={isActive ? 'bg-gray-700 text-white p-1' : 'text-gray-600 p-1'}>
+                <span
+                  aria-hidden="true"
+                  className={`w-2.5 h-2.5 rounded-full bg-accent transition-opacity ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                />
+                <span className={isActive ? 'text-accent' : 'text-ink'}>
                   {section.name}
                 </span>
               </a>
@@ -89,7 +93,7 @@ export default function Sidebar({ activeSection, sections }) {
         </nav>
 
         {/* Footer */}
-        <div className="text-xs text-gray-400 mt-auto">
+        <div className="text-xs text-ink/50 mt-auto">
           © {new Date().getFullYear()} Sara Cedernaes. All rights reserved.
         </div>
       </div>
