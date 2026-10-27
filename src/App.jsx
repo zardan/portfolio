@@ -35,8 +35,8 @@ export default function App() {
         onShowProject={projectView.show}
       />
 
-      {/* Main Content */}
-      <main className="w-full md:flex-1 md:min-w-0 md:ml-64 lg:ml-72 xl:ml-80 overflow-y-scroll h-screen snap-content pt-16 md:pt-0">
+      {/* Main Content: its own scroll area on desktop, the normal page scroll on a phone */}
+      <main className="w-full md:flex-1 md:min-w-0 md:ml-64 lg:ml-72 xl:ml-80 md:overflow-y-scroll md:h-screen snap-content pt-16 md:pt-0">
         <Intro />
         <About />
         <Portfolio view={projectView} />

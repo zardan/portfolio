@@ -12,9 +12,12 @@ body,
     height: 100%;
 }
 
-/* Snap scroll setup */
-.snap-content {
-    scroll-snap-type: y proximity;
+/* Snap scroll setup: desktop only. On a phone the page scrolls freely, so text can be
+   read at the top of the screen without being pulled to the next section */
+@media (min-width: 768px) {
+    .snap-content {
+        scroll-snap-type: y proximity;
+    }
 }
 
 /* Simple container */
