@@ -240,7 +240,7 @@ export default function ProjectView({ project, number, total, origin, onClose, o
             role="dialog"
             aria-modal="true"
             aria-labelledby="project-view-title"
-            className="fixed inset-0 md:left-64 lg:left-72 xl:left-80 z-50 bg-paper overflow-y-auto"
+            className="fixed inset-0 md:left-64 lg:left-72 xl:left-80 z-50 bg-paper overflow-y-auto overscroll-contain"
         >
             <div className="container min-h-full flex flex-col">
                 <div className="flex items-center justify-between gap-6 py-4 border-b border-ink/20">
