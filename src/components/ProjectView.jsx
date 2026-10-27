@@ -100,30 +100,26 @@ function SplitLayout({ project, number }) {
     )
 }
 
-// Title row on top, then the cover and the other images as one square grid with the text beside it.
-// Four columns once there are four or more images, so the rows next to the cover fill up.
+// Title row on top, a wide cover with the text beside it, the other images in a row of four underneath
 function GalleryLayout({ project, number }) {
-    const cols = (project.images?.length ?? 0) >= 4 ? 'grid-cols-4' : 'grid-cols-3'
     return (
         <>
             <div className="flex items-end justify-between gap-6">
                 <Title project={project} className="text-2xl md:text-5xl" />
                 <ProjectNumber number={number} className="text-5xl md:text-8xl shrink-0" />
             </div>
-            <div className="grid md:grid-cols-12 gap-6 md:gap-8 mt-6 md:mt-8">
-                <div className={`md:col-span-8 grid ${cols} gap-3 md:gap-4`}>
-                    <Cell
-                        path={project.cover.src}
-                        alt={project.title}
-                        position={project.cover.position}
-                        className="col-span-2 row-span-2 aspect-square"
-                    />
-                    <Images project={project} className="aspect-square" />
-                </div>
-                <div className="md:col-span-4 flex flex-col gap-5">
+            <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-8 mt-6 md:mt-8">
+                <Cell
+                    path={project.cover.src}
+                    alt={project.title}
+                    position={project.cover.position}
+                    className="col-span-2 md:col-span-8 aspect-[4/3]"
+                />
+                <div className="col-span-2 md:col-span-4 flex flex-col gap-5">
                     <Tags project={project} />
                     <Description project={project} />
                 </div>
+                <Images project={project} className="md:col-span-3 aspect-square" />
             </div>
         </>
     )
