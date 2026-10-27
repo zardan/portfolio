@@ -67,26 +67,31 @@ function ProcessRow({ project, colsClass, cellClass }) {
     )
 }
 
-// Text left, cover right, process row underneath
+// Text left, cover right, process images continuing in the same grid underneath
 function HeroLayout({ project, number }) {
     return (
-        <>
-            <div className="grid md:grid-cols-12 gap-6 md:gap-8">
-                <div className="md:col-span-5 flex flex-col gap-5 order-2 md:order-1">
-                    <ProjectNumber number={number} className="text-6xl md:text-8xl" />
-                    <Title project={project} className="text-2xl md:text-4xl" />
-                    <Tags project={project} />
-                    <Description project={project} className="md:mt-auto" />
-                </div>
-                <Cell
-                    path={project.cover.src}
-                    alt={project.title}
-                    position={project.cover.position}
-                    className="md:col-span-7 aspect-[5/4] order-1 md:order-2"
-                />
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-8">
+            <div className="col-span-2 md:col-span-5 flex flex-col gap-5 order-2 md:order-1">
+                <ProjectNumber number={number} className="text-6xl md:text-8xl" />
+                <Title project={project} className="text-2xl md:text-4xl" />
+                <Tags project={project} />
+                <Description project={project} className="md:mt-auto" />
             </div>
-            <ProcessRow project={project} colsClass="md:grid-cols-4" cellClass="aspect-square" />
-        </>
+            <Cell
+                path={project.cover.src}
+                alt={project.title}
+                position={project.cover.position}
+                className="col-span-2 md:col-span-7 aspect-[5/4] order-1 md:order-2"
+            />
+            {(project.process ?? []).map((path) => (
+                <Cell
+                    key={path}
+                    path={path}
+                    alt={`${project.title}, process`}
+                    className="md:col-span-3 aspect-square order-3"
+                />
+            ))}
+        </div>
     )
 }
 
