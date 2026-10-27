@@ -3,6 +3,17 @@
 // position: optional CSS object-position, to choose which part of a cropped photo shows
 export const projects = [
     {
+        id: 'yann',
+        title: 'YANN pottery gathering, 2026',
+        images: [
+            { src: 'images/yann-3.jpeg', size: 'large' },
+            { src: 'images/yann-1.jpeg', size: 'tall' },
+            { src: 'images/yann-2.jpeg', size: 'tall' }
+        ],
+        description: 'Naturlera från platsen, formad för hand och bränd i en vedeldad ugn som vi byggde, Chiang Dao, Thailand.',
+        tags: ['keramik', 'naturlera']
+    },
+    {
         id: 'bowls',
         title: 'Skålar i stengods',
         images: [
