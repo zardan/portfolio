@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { projects } from '../data/projects'
 import WorkTile from './WorkTile'
+import ProjectView from './ProjectView'
 import { useReveal } from '../hooks/useReveal'
 
 export default function Portfolio() {
   const [titleRef, titleVisible] = useReveal()
-
-  const tiles = projects.flatMap((project, p) =>
-    project.images.map((image, i) => ({ project, image, number: p + 1, isFirst: i === 0 }))
-  )
+  const [openIndex, setOpenIndex] = useState(null)
+  const close = useCallback(() => setOpenIndex(null), [])
 
   return (
     <section id="portfolio">
@@ -22,8 +21,14 @@ export default function Portfolio() {
 
         <div className="work-grid-wrap">
           <div className="work-grid">
-            {tiles.map((tile, index) => (
-              <WorkTile key={tile.image.src} {...tile} index={index} />
+            {projects.map((project, index) => (
+              <WorkTile
+                key={project.id}
+                project={project}
+                number={index + 1}
+                index={index}
+                onOpen={() => setOpenIndex(index)}
+              />
             ))}
           </div>
         </div>
@@ -33,6 +38,10 @@ export default function Portfolio() {
           <a href="#kontakt" className="underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">Kontakt →</a>
         </p>
       </div>
+
+      {openIndex !== null && (
+        <ProjectView project={projects[openIndex]} number={openIndex + 1} onClose={close} />
+      )}
     </section>
   )
 }

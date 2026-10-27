@@ -1,54 +1,45 @@
-// Each image is its own tile in the grid.
-// size: 'small' (1×1), 'wide' (2×1), 'tall' (1×2) or 'large' (2×2)
-// position: optional CSS object-position, to choose which part of a cropped photo shows
+// Each project shows its cover as one tile in the grid. Clicking it opens the
+// project view with the cover, the description (if any) and the process images.
+// cover.size: 'small' (1×1), 'wide' (2×1), 'tall' (1×2) or 'large' (2×2)
+// cover.position: optional CSS object-position, to choose which part of a cropped cover shows
 export const projects = [
     {
         id: 'yann',
         title: 'YANN pottery gathering, 2026',
-        images: [
-            { src: 'images/yann-3.jpeg', size: 'large' },
-            { src: 'images/yann-1.jpeg', size: 'tall' },
-            { src: 'images/yann-2.jpeg', size: 'tall' }
-        ],
+        cover: { src: 'images/yann-3.jpeg', size: 'large' },
+        process: ['images/yann-1.jpeg', 'images/yann-2.jpeg'],
         description: 'Naturlera från platsen, formad för hand och bränd i en vedeldad ugn som vi byggde, Chiang Dao, Thailand.',
         tags: ['keramik', 'naturlera']
     },
     {
         id: 'bowls',
         title: 'Skålar i stengods',
-        images: [
-            { src: 'images/bowl-1.jpeg', size: 'large' },
-            { src: 'images/bowl-2.jpeg', size: 'small' },
-            { src: 'images/bowl-3.jpeg', size: 'small' }
-        ],
+        cover: { src: 'images/bowl-1.jpeg', size: 'large' },
+        process: ['images/bowl-2.jpeg', 'images/bowl-3.jpeg'],
         description: '',
         tags: ['stengodslera', 'keramik']
     },
     {
         id: 'candleholders',
         title: 'Ljusstakar i keramik',
-        images: [
-            { src: 'images/candles.jpeg', size: 'tall' }
-        ],
+        cover: { src: 'images/candles.jpeg', size: 'small' },
+        process: [],
         description: '',
         tags: ['keramik']
     },
     {
         id: 'annie',
         title: 'Namnskylt i keramik',
-        images: [
-            { src: 'images/annie-1.jpeg', size: 'small' },
-            { src: 'images/annie-2.jpeg', size: 'wide', position: 'center 60%' }
-        ],
+        cover: { src: 'images/annie-2.jpeg', size: 'wide', position: 'center 60%' },
+        process: ['images/annie-1.jpeg'],
         description: '',
         tags: ['keramik']
     },
     {
         id: 'kudde',
         title: 'Tuftad kudde',
-        images: [
-            { src: 'images/kudde.jpeg', size: 'small' }
-        ],
+        cover: { src: 'images/kudde.jpeg', size: 'small' },
+        process: [],
         description: '',
         tags: ['textil', 'tuftning']
     }
