@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { projects } from '../data/projects'
 
-export default function Sidebar({ activeSection, sections }) {
+export default function Sidebar({ activeSection, sections, openProject, onShowProject }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
@@ -75,19 +76,44 @@ export default function Sidebar({ activeSection, sections }) {
           {sections.map((section) => {
             const isActive = activeSection === section.id
             return (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className="nav-link flex items-center gap-2 text-xl font-display font-bold"
-              >
-                <span
-                  aria-hidden="true"
-                  className={`w-2.5 h-2.5 rounded-full bg-accent transition-opacity ${isActive ? 'opacity-100' : 'opacity-0'}`}
-                />
-                <span className={isActive ? 'text-accent' : 'text-ink'}>
-                  {section.name}
-                </span>
-              </a>
+              <React.Fragment key={section.id}>
+                <a
+                  href={`#${section.id}`}
+                  className="nav-link flex items-center gap-2 text-xl font-display font-bold"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`w-2.5 h-2.5 rounded-full bg-accent transition-opacity ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                  />
+                  <span className={isActive ? 'text-accent' : 'text-ink'}>
+                    {section.name}
+                  </span>
+                </a>
+
+                {/* With a project open, "på sistone" unfolds into its projects, the open one marked */}
+                {section.id === 'portfolio' && openProject && (
+                  <ul className="ml-[18px] pl-3 border-l border-accent/40 space-y-1.5 py-1">
+                    {projects.map((project) => {
+                      const isOpen = project.id === openProject
+                      return (
+                        <li key={project.id}>
+                          <a
+                            href={`#portfolio/${project.id}`}
+                            aria-current={isOpen ? 'page' : undefined}
+                            onClick={(e) => {
+                              e.preventDefault()
+                              onShowProject(project.id)
+                            }}
+                            className={`block text-sm leading-snug ${isOpen ? 'text-accent' : 'text-ink/60 hover:text-ink'}`}
+                          >
+                            {project.title}
+                          </a>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
+              </React.Fragment>
             )
           })}
         </nav>

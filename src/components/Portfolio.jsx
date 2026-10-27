@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { projects } from '../data/projects'
 import WorkTile from './WorkTile'
+import ProjectView from './ProjectView'
 import { useReveal } from '../hooks/useReveal'
 
-export default function Portfolio() {
+// view: the open project and how to open, switch and close it (useProjectView)
+export default function Portfolio({ view }) {
   const [titleRef, titleVisible] = useReveal()
-
-  const tiles = projects.flatMap((project, p) =>
-    project.images.map((image, i) => ({ project, image, number: p + 1, isFirst: i === 0 }))
-  )
+  const { openId, open, show, close } = view
+  const openIndex = openId ? projects.findIndex((p) => p.id === openId) : null
+  // The opened tile's position, so the project view can expand out of it
+  const [origin, setOrigin] = useState(null)
+  const prev = useCallback(() => show(projects[(openIndex - 1 + projects.length) % projects.length].id), [openIndex, show])
+  const next = useCallback(() => show(projects[(openIndex + 1) % projects.length].id), [openIndex, show])
 
   return (
     <section id="portfolio">
@@ -22,8 +26,17 @@ export default function Portfolio() {
 
         <div className="work-grid-wrap">
           <div className="work-grid">
-            {tiles.map((tile, index) => (
-              <WorkTile key={tile.image.src} {...tile} index={index} />
+            {projects.map((project, index) => (
+              <WorkTile
+                key={project.id}
+                project={project}
+                number={index + 1}
+                index={index}
+                onOpen={(e) => {
+                  setOrigin(e.currentTarget.getBoundingClientRect())
+                  open(project.id)
+                }}
+              />
             ))}
           </div>
         </div>
@@ -33,6 +46,18 @@ export default function Portfolio() {
           <a href="#kontakt" className="underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">Kontakt →</a>
         </p>
       </div>
+
+      {openIndex !== null && (
+        <ProjectView
+          project={projects[openIndex]}
+          number={openIndex + 1}
+          total={projects.length}
+          origin={origin}
+          onClose={close}
+          onPrev={prev}
+          onNext={next}
+        />
+      )}
     </section>
   )
 }
