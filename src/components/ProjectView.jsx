@@ -243,23 +243,27 @@ export default function ProjectView({ project, number, total, origin, onClose, o
             className="fixed inset-0 md:left-64 lg:left-72 xl:left-80 z-50 bg-paper overflow-y-auto"
         >
             <div className="container min-h-full flex flex-col">
-                {/* The section heading sits where it does on the page, so the view reads as "på sistone" opened up */}
-                <div className="flex items-end justify-between gap-6 pt-8 md:pt-32 pb-8 md:pb-14">
-                    <h2 className="section-title !pb-0">på sistone</h2>
-                    <div className="flex items-center gap-5 md:gap-8 text-xs tracking-wide uppercase">
-                        <span className="text-ink/60 whitespace-nowrap">{number} / {total}</span>
+                <div className="flex items-center justify-between gap-6 py-4 border-b border-ink/20">
+                    <h2 className="font-display text-base md:text-lg leading-none bg-accent text-paper px-2 py-1">
+                        på sistone
+                    </h2>
+                    <div className="flex items-center gap-5">
+                        <span className="text-xs text-ink/60 tracking-wide whitespace-nowrap">{number} / {total}</span>
                         <button
                             ref={closeRef}
                             type="button"
                             onClick={onClose}
-                            className="flex items-center gap-2 -mr-1 px-1 text-accent hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                            aria-label="Stäng"
+                            className="w-10 h-10 -mr-2 flex items-center justify-center text-ink hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                         >
-                            stäng <span aria-hidden="true" className="text-2xl leading-none">✕</span>
+                            <svg viewBox="0 0 24 24" className="w-6 h-6" aria-hidden="true">
+                                <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square" />
+                            </svg>
                         </button>
                     </div>
                 </div>
 
-                <div className="flex-1 pb-8 md:pb-12">
+                <div className="flex-1 py-8 md:py-12">
                     <Layout project={project} number={number} />
                 </div>
 
