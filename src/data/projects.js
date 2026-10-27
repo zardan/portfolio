@@ -3,9 +3,10 @@
 // layout: how the project view is arranged, 'hero' (default), 'split' or 'gallery'
 // cover.size: 'small' (1×1), 'wide' (2×1), 'tall' (1×2) or 'large' (2×2)
 // cover.position: optional CSS object-position, to choose which part of a cropped cover shows
-// In the 'gallery' layout the cover and images sit in a grid of square cells and can span
-// 1–3 columns and rows: cover defaults to cols: 2, rows: 2; an image can be a path (1×1)
-// or { src, cols, rows }. cover.order places the cover among the images (0 = first, the default)
+// In the project view the cover and images sit in a grid of square cells (4 columns in 'hero' and
+// 'split', 3 beside the text in 'gallery', 2 on mobile) and can span columns and rows: the cover
+// defaults to cols: 2, rows: 2; an image can be a path (1×1) or { src, cols, rows }.
+// In 'gallery', cover.order places the cover among the images (0 = first, the default)
 export const projects = [
     {
         id: 'yann',

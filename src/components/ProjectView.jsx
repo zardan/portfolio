@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 
 const src = (path) => import.meta.env.BASE_URL + path
 
-// A fixed-ratio image cell, so every layout stays on a strict grid
+// An image cell that fills its grid area, so every layout stays on a strict grid
 function Cell({ path, alt = '', className = '', position }) {
     return (
         <div className={`relative overflow-hidden bg-ink/5 ${className}`}>
@@ -51,85 +51,98 @@ function Description({ project, className = '' }) {
     )
 }
 
-// The project's other images, as cells in the same grid as the cover and text
-function Images({ project, className }) {
+// Every layout is a grid of square cells where images and text span columns and rows.
+// The gallery grid has 3 columns beside its text, hero and split have 4 across the full width,
+// so the cells come out the same size. On mobile the grid has 2 columns and spans are capped at 2.
+const colSpans = {
+    1: 'col-span-1',
+    2: 'col-span-2',
+    3: 'col-span-2 md:col-span-3',
+    4: 'col-span-2 md:col-span-4'
+}
+const rowSpans = { 1: 'row-span-1', 2: 'row-span-2', 3: 'row-span-2 md:row-span-3' }
+const spans = ({ cols, rows }) => `${colSpans[cols] ?? colSpans[1]} ${rowSpans[rows] ?? rowSpans[1]}`
+
+// The text block takes the full width on mobile and grows with its content
+const textCols = { 1: 'md:col-span-1', 2: 'md:col-span-2', 3: 'md:col-span-3' }
+const textRows = { 1: 'md:row-span-1', 2: 'md:row-span-2', 3: 'md:row-span-3' }
+const textSpans = ({ cols, rows }) => `col-span-2 ${textCols[cols] ?? textCols[2]} ${textRows[rows] ?? textRows[2]}`
+
+// Images may be a path, or { src, cols, rows, position } to span more of the grid
+const asImage = (image) => (typeof image === 'string' ? { src: image } : image)
+
+function ViewGrid({ wide = false, children }) {
+    return (
+        <div className={`view-grid-wrap ${wide ? 'view-grid-wrap--wide' : ''}`}>
+            <div className="view-grid">{children}</div>
+        </div>
+    )
+}
+
+function Cover({ cover, project, className = '' }) {
+    return (
+        <Cell
+            path={cover.src}
+            alt={project.title}
+            position={cover.position}
+            className={`${spans(cover)} ${className}`}
+        />
+    )
+}
+
+// The project's other images, after the cover and text in the same grid
+function Images({ project, className = '' }) {
     return (project.images ?? []).map(asImage).map((image, i) => (
-        <Cell key={image.src} path={image.src} alt={`${project.title}, bild ${i + 2}`} position={image.position} className={className} />
+        <Cell
+            key={image.src}
+            path={image.src}
+            alt={`${project.title}, bild ${i + 2}`}
+            position={image.position}
+            className={`${spans(image)} ${className}`}
+        />
     ))
 }
 
-// Text left, cover right, the other images continuing in the same grid underneath
+// Text left, cover right (2×2 by default), the other images continuing underneath
 function HeroLayout({ project, number }) {
+    const cover = { cols: 2, rows: 2, ...project.cover }
     return (
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-8">
-            <div className="col-span-2 md:col-span-5 flex flex-col gap-5 order-2 md:order-1">
+        <ViewGrid wide>
+            <div className={`${textSpans({ cols: 4 - Math.min(cover.cols, 3), rows: cover.rows })} flex flex-col gap-5 order-2 md:order-none`}>
                 <ProjectNumber number={number} className="text-6xl md:text-8xl" />
                 <Title project={project} className="text-2xl md:text-4xl" />
                 <Tags project={project} />
                 <Description project={project} className="md:mt-auto" />
             </div>
-            <Cell
-                path={project.cover.src}
-                alt={project.title}
-                position={project.cover.position}
-                className="col-span-2 md:col-span-7 aspect-[5/4] order-1 md:order-2"
-            />
-            <Images project={project} className="md:col-span-3 aspect-square order-3" />
-        </div>
+            <Cover cover={cover} project={project} className="order-1 md:order-none" />
+            <Images project={project} className="order-3 md:order-none" />
+        </ViewGrid>
     )
 }
 
-// Cover left, text right with the number at the bottom, the other images underneath in the same grid
+// Cover left (2×2 by default), text right with the number at the bottom, the other images underneath
 function SplitLayout({ project, number }) {
+    const cover = { cols: 2, rows: 2, ...project.cover }
     return (
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-8">
-            <Cell
-                path={project.cover.src}
-                alt={project.title}
-                position={project.cover.position}
-                className="col-span-2 md:col-span-6 aspect-[4/5]"
-            />
-            <div className="col-span-2 md:col-span-6 flex flex-col gap-5">
+        <ViewGrid wide>
+            <Cover cover={cover} project={project} />
+            <div className={`${textSpans({ cols: 4 - Math.min(cover.cols, 3), rows: cover.rows })} flex flex-col gap-5`}>
                 <Title project={project} className="text-2xl md:text-4xl" />
                 <Tags project={project} />
                 <Description project={project} />
                 <ProjectNumber number={number} className="text-6xl md:text-8xl md:mt-auto md:self-end" />
             </div>
-            <Images project={project} className="md:col-span-4 aspect-[4/3]" />
-        </div>
+            <Images project={project} />
+        </ViewGrid>
     )
 }
 
-// Spans in the project view grid. On mobile the grid has two columns, so spans are capped at 2 there.
-const colSpans = { 1: 'col-span-1', 2: 'col-span-2 md:col-span-2', 3: 'col-span-2 md:col-span-3' }
-const rowSpans = { 1: 'row-span-1', 2: 'row-span-2', 3: 'row-span-2 md:row-span-3' }
-
-// Images may be a path, or { src, cols, rows, position } to span more of the grid
-const asImage = (image) => (typeof image === 'string' ? { src: image } : image)
-
-function SpanGrid({ project }) {
+// Title row on top, the images in a 3-column grid with the text in a narrow column beside it.
+// cover.order places the cover among the images (0 = first).
+function GalleryLayout({ project, number }) {
     const cover = { cols: 2, rows: 2, ...project.cover }
     const images = (project.images ?? []).map((image, i) => ({ ...asImage(image), alt: `${project.title}, bild ${i + 2}` }))
     images.splice(cover.order ?? 0, 0, { ...cover, alt: project.title })
-    return (
-        <div className="view-grid-wrap">
-            <div className="view-grid">
-                {images.map((image) => (
-                    <Cell
-                        key={image.src}
-                        path={image.src}
-                        alt={image.alt}
-                        position={image.position}
-                        className={`${colSpans[image.cols] ?? colSpans[1]} ${rowSpans[image.rows] ?? rowSpans[1]}`}
-                    />
-                ))}
-            </div>
-        </div>
-    )
-}
-
-// Title row on top, the images as a grid of square cells with the text in a narrow column beside it
-function GalleryLayout({ project, number }) {
     return (
         <>
             <div className="flex items-end justify-between gap-6">
@@ -138,7 +151,17 @@ function GalleryLayout({ project, number }) {
             </div>
             <div className="grid md:grid-cols-12 gap-6 md:gap-8 mt-6 md:mt-8">
                 <div className="md:col-span-9">
-                    <SpanGrid project={project} />
+                    <ViewGrid>
+                        {images.map((image) => (
+                            <Cell
+                                key={image.src}
+                                path={image.src}
+                                alt={image.alt}
+                                position={image.position}
+                                className={spans(image)}
+                            />
+                        ))}
+                    </ViewGrid>
                 </div>
                 <div className="md:col-span-3 flex flex-col gap-5">
                     <Tags project={project} />
