@@ -218,14 +218,14 @@ export default function ProjectView({ project, number, total, origin, onClose, o
         })
     }, [])
 
-    // The sidebar stays visible, so following one of its links closes the view
+    // Name the open project in the browser tab and history
     useEffect(() => {
-        const onLink = (e) => {
-            if (e.target.closest?.('a[href^="#"]')) onClose()
+        const previous = document.title
+        document.title = `${project.title} – ${previous}`
+        return () => {
+            document.title = previous
         }
-        document.addEventListener('click', onLink)
-        return () => document.removeEventListener('click', onLink)
-    }, [onClose])
+    }, [project.title])
 
     // Start each project at the top
     useEffect(() => {
@@ -244,9 +244,19 @@ export default function ProjectView({ project, number, total, origin, onClose, o
         >
             <div className="container min-h-full flex flex-col">
                 <div className="flex items-center justify-between gap-6 py-4 border-b border-ink/20">
-                    <h2 className="font-display text-base md:text-lg leading-none bg-accent text-paper px-2 py-1">
-                        på sistone
-                    </h2>
+                    {/* Breadcrumb: back to the grid, then the open project */}
+                    <nav aria-label="Brödsmulor" className="flex items-center gap-3 min-w-0 font-display text-base md:text-lg leading-none">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="group flex items-center gap-2 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        >
+                            <span aria-hidden="true" className="text-accent transition-transform group-hover:-translate-x-1">←</span>
+                            <span className="bg-accent text-paper px-2 py-1">på sistone</span>
+                        </button>
+                        <span aria-hidden="true" className="hidden md:inline text-ink/40">/</span>
+                        <span className="hidden md:inline truncate lowercase text-ink/70">{project.title}</span>
+                    </nav>
                     <div className="flex items-center gap-5">
                         <span className="text-xs text-ink/60 tracking-wide whitespace-nowrap">{number} / {total}</span>
                         <button

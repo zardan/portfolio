@@ -1,20 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { projects } from '../data/projects'
 import WorkTile from './WorkTile'
 import ProjectView from './ProjectView'
 import { useReveal } from '../hooks/useReveal'
 
-export default function Portfolio({ onProjectOpen }) {
+// view: the open project and how to open, switch and close it (useProjectView)
+export default function Portfolio({ view }) {
   const [titleRef, titleVisible] = useReveal()
-  const [openIndex, setOpenIndex] = useState(null)
+  const { openId, open, show, close } = view
+  const openIndex = openId ? projects.findIndex((p) => p.id === openId) : null
   // The opened tile's position, so the project view can expand out of it
   const [origin, setOrigin] = useState(null)
-  useEffect(() => {
-    onProjectOpen?.(openIndex !== null)
-  }, [openIndex, onProjectOpen])
-  const close = useCallback(() => setOpenIndex(null), [])
-  const prev = useCallback(() => setOpenIndex((i) => (i - 1 + projects.length) % projects.length), [])
-  const next = useCallback(() => setOpenIndex((i) => (i + 1) % projects.length), [])
+  const prev = useCallback(() => show(projects[(openIndex - 1 + projects.length) % projects.length].id), [openIndex, show])
+  const next = useCallback(() => show(projects[(openIndex + 1) % projects.length].id), [openIndex, show])
 
   return (
     <section id="portfolio">
@@ -36,7 +34,7 @@ export default function Portfolio({ onProjectOpen }) {
                 index={index}
                 onOpen={(e) => {
                   setOrigin(e.currentTarget.getBoundingClientRect())
-                  setOpenIndex(index)
+                  open(project.id)
                 }}
               />
             ))}
