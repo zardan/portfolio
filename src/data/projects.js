@@ -1,5 +1,5 @@
 // Each project shows its cover as one tile in the grid. Clicking it opens the
-// project view with the cover, the description (if any) and the process images.
+// project view with the cover, the description (if any) and the other images.
 // layout: how the project view is arranged, 'hero' (default), 'split' or 'gallery'
 // cover.size: 'small' (1×1), 'wide' (2×1), 'tall' (1×2) or 'large' (2×2)
 // cover.position: optional CSS object-position, to choose which part of a cropped cover shows
@@ -9,7 +9,7 @@ export const projects = [
         title: 'YANN pottery gathering, 2026',
         layout: 'gallery',
         cover: { src: 'images/yann-3.jpeg', size: 'large' },
-        process: ['images/yann-1.jpeg', 'images/yann-2.jpeg'],
+        images: ['images/yann-4.jpeg', 'images/yann-1.jpeg', 'images/yann-2.jpeg', 'images/yann-5.jpeg'],
         description: 'Naturlera från platsen, formad för hand och bränd i en vedeldad ugn som vi byggde, Chiang Dao, Thailand.',
         tags: ['keramik', 'naturlera']
     },
@@ -18,7 +18,7 @@ export const projects = [
         title: 'Skålar i stengods',
         layout: 'hero',
         cover: { src: 'images/bowl-1.jpeg', size: 'large' },
-        process: ['images/bowl-2.jpeg', 'images/bowl-3.jpeg'],
+        images: ['images/bowl-2.jpeg', 'images/bowl-3.jpeg'],
         description: '',
         tags: ['stengodslera', 'keramik']
     },
@@ -27,7 +27,7 @@ export const projects = [
         title: 'Ljusstakar i keramik',
         layout: 'split',
         cover: { src: 'images/candles.jpeg', size: 'small' },
-        process: [],
+        images: [],
         description: '',
         tags: ['keramik']
     },
@@ -36,7 +36,7 @@ export const projects = [
         title: 'Namnskylt i keramik',
         layout: 'hero',
         cover: { src: 'images/annie-2.jpeg', size: 'wide', position: 'center 60%' },
-        process: ['images/annie-1.jpeg'],
+        images: ['images/annie-1.jpeg'],
         description: '',
         tags: ['keramik']
     },
@@ -45,7 +45,7 @@ export const projects = [
         title: 'Tuftad kudde',
         layout: 'hero',
         cover: { src: 'images/kudde.jpeg', size: 'small' },
-        process: [],
+        images: [],
         description: '',
         tags: ['textil', 'tuftning']
     }

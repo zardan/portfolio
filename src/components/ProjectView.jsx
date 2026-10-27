@@ -51,23 +51,14 @@ function Description({ project, className = '' }) {
     )
 }
 
-// Process images keep a fixed column count per layout, so a short row leaves empty grid cells
-function ProcessRow({ project, colsClass, cellClass }) {
-    const process = project.process ?? []
-    if (!process.length) return null
-    return (
-        <div className="mt-6 md:mt-8 pt-6 border-t border-ink/20">
-            <p className="text-xs text-ink/60 tracking-wide uppercase">process</p>
-            <div className={`grid grid-cols-2 ${colsClass} gap-4 md:gap-6`}>
-                {process.map((path) => (
-                    <Cell key={path} path={path} alt={`${project.title}, process`} className={cellClass} />
-                ))}
-            </div>
-        </div>
-    )
+// The project's other images, as cells in the same grid as the cover and text
+function Images({ project, className }) {
+    return (project.images ?? []).map((path, i) => (
+        <Cell key={path} path={path} alt={`${project.title}, bild ${i + 2}`} className={className} />
+    ))
 }
 
-// Text left, cover right, process images continuing in the same grid underneath
+// Text left, cover right, the other images continuing in the same grid underneath
 function HeroLayout({ project, number }) {
     return (
         <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-8">
@@ -83,44 +74,36 @@ function HeroLayout({ project, number }) {
                 position={project.cover.position}
                 className="col-span-2 md:col-span-7 aspect-[5/4] order-1 md:order-2"
             />
-            {(project.process ?? []).map((path) => (
-                <Cell
-                    key={path}
-                    path={path}
-                    alt={`${project.title}, process`}
-                    className="md:col-span-3 aspect-square order-3"
-                />
-            ))}
+            <Images project={project} className="md:col-span-3 aspect-square order-3" />
         </div>
     )
 }
 
-// Cover left, text right with the number at the bottom, process row underneath
+// Cover left, text right with the number at the bottom, the other images underneath in the same grid
 function SplitLayout({ project, number }) {
     return (
-        <>
-            <div className="grid md:grid-cols-12 gap-6 md:gap-8">
-                <Cell
-                    path={project.cover.src}
-                    alt={project.title}
-                    position={project.cover.position}
-                    className="md:col-span-6 aspect-[4/5]"
-                />
-                <div className="md:col-span-6 flex flex-col gap-5">
-                    <Title project={project} className="text-2xl md:text-4xl" />
-                    <Tags project={project} />
-                    <Description project={project} />
-                    <ProjectNumber number={number} className="text-6xl md:text-8xl md:mt-auto md:self-end" />
-                </div>
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-8">
+            <Cell
+                path={project.cover.src}
+                alt={project.title}
+                position={project.cover.position}
+                className="col-span-2 md:col-span-6 aspect-[4/5]"
+            />
+            <div className="col-span-2 md:col-span-6 flex flex-col gap-5">
+                <Title project={project} className="text-2xl md:text-4xl" />
+                <Tags project={project} />
+                <Description project={project} />
+                <ProjectNumber number={number} className="text-6xl md:text-8xl md:mt-auto md:self-end" />
             </div>
-            <ProcessRow project={project} colsClass="md:grid-cols-3" cellClass="aspect-[4/3]" />
-        </>
+            <Images project={project} className="md:col-span-4 aspect-[4/3]" />
+        </div>
     )
 }
 
-// Title row on top, then the cover and process images as one square grid with the text beside it
+// Title row on top, then the cover and the other images as one square grid with the text beside it.
+// Four columns once there are four or more images, so the rows next to the cover fill up.
 function GalleryLayout({ project, number }) {
-    const process = project.process ?? []
+    const cols = (project.images?.length ?? 0) >= 4 ? 'grid-cols-4' : 'grid-cols-3'
     return (
         <>
             <div className="flex items-end justify-between gap-6">
@@ -128,16 +111,14 @@ function GalleryLayout({ project, number }) {
                 <ProjectNumber number={number} className="text-5xl md:text-8xl shrink-0" />
             </div>
             <div className="grid md:grid-cols-12 gap-6 md:gap-8 mt-6 md:mt-8">
-                <div className="md:col-span-8 grid grid-cols-3 gap-3 md:gap-4">
+                <div className={`md:col-span-8 grid ${cols} gap-3 md:gap-4`}>
                     <Cell
                         path={project.cover.src}
                         alt={project.title}
                         position={project.cover.position}
                         className="col-span-2 row-span-2 aspect-square"
                     />
-                    {process.map((path) => (
-                        <Cell key={path} path={path} alt={`${project.title}, process`} className="aspect-square" />
-                    ))}
+                    <Images project={project} className="aspect-square" />
                 </div>
                 <div className="md:col-span-4 flex flex-col gap-5">
                     <Tags project={project} />
