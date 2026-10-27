@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from './components/Sidebar'
 import Intro from './components/Intro'
 import About from './components/About'
@@ -21,17 +21,19 @@ const sectionIds = ['start', ...sections.map(s => s.id)]
 
 export default function App() {
   const activeSection = useActiveSection(sectionIds)
+  // While a project is open the page underneath is hidden, so mark "på sistone" in the menu
+  const [projectOpen, setProjectOpen] = useState(false)
 
   return (
     <div className="flex flex-col md:flex-row">
       {/* Fixed Sidebar */}
-      <Sidebar activeSection={activeSection} sections={sections} />
+      <Sidebar activeSection={projectOpen ? 'portfolio' : activeSection} sections={sections} />
 
       {/* Main Content */}
       <main className="w-full md:flex-1 md:min-w-0 md:ml-64 lg:ml-72 xl:ml-80 overflow-y-scroll h-screen snap-content pt-16 md:pt-0">
         <Intro />
         <About />
-        <Portfolio />
+        <Portfolio onProjectOpen={setProjectOpen} />
         <CV />
         {/* <Blog /> */}
         <Contact />

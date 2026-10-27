@@ -1,14 +1,17 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { projects } from '../data/projects'
 import WorkTile from './WorkTile'
 import ProjectView from './ProjectView'
 import { useReveal } from '../hooks/useReveal'
 
-export default function Portfolio() {
+export default function Portfolio({ onProjectOpen }) {
   const [titleRef, titleVisible] = useReveal()
   const [openIndex, setOpenIndex] = useState(null)
   // The opened tile's position, so the project view can expand out of it
   const [origin, setOrigin] = useState(null)
+  useEffect(() => {
+    onProjectOpen?.(openIndex !== null)
+  }, [openIndex, onProjectOpen])
   const close = useCallback(() => setOpenIndex(null), [])
   const prev = useCallback(() => setOpenIndex((i) => (i - 1 + projects.length) % projects.length), [])
   const next = useCallback(() => setOpenIndex((i) => (i + 1) % projects.length), [])

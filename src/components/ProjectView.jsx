@@ -243,23 +243,23 @@ export default function ProjectView({ project, number, total, origin, onClose, o
             className="fixed inset-0 md:left-64 lg:left-72 xl:left-80 z-50 bg-paper overflow-y-auto"
         >
             <div className="container min-h-full flex flex-col">
-                <div className="flex items-center justify-between py-4 border-b border-ink/20 text-xs text-ink/60 tracking-wide uppercase">
-                    <span>på sistone</span>
-                    <div className="flex items-center gap-4">
-                        <span>{number} / {total}</span>
+                {/* The section heading sits where it does on the page, so the view reads as "på sistone" opened up */}
+                <div className="flex items-end justify-between gap-6 pt-8 md:pt-32 pb-8 md:pb-14">
+                    <h2 className="section-title !pb-0">på sistone</h2>
+                    <div className="flex items-center gap-5 md:gap-8 text-xs tracking-wide uppercase">
+                        <span className="text-ink/60 whitespace-nowrap">{number} / {total}</span>
                         <button
                             ref={closeRef}
                             type="button"
                             onClick={onClose}
-                            aria-label="Stäng"
-                            className="w-8 h-8 -mr-2 flex items-center justify-center text-lg text-ink hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                            className="flex items-center gap-2 -mr-1 px-1 text-accent hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                         >
-                            ✕
+                            stäng <span aria-hidden="true" className="text-2xl leading-none">✕</span>
                         </button>
                     </div>
                 </div>
 
-                <div className="flex-1 py-8 md:py-12">
+                <div className="flex-1 pb-8 md:pb-12">
                     <Layout project={project} number={number} />
                 </div>
 
