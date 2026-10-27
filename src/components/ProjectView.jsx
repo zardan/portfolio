@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 
 const src = (path) => import.meta.env.BASE_URL + path
 
@@ -103,12 +103,19 @@ function Images({ project, className = '' }) {
     ))
 }
 
-// Text left, cover right (2×2 by default), the other images continuing underneath
+// Beside the cover the text takes the columns left over. Without a description it only needs
+// one row, and the other images fill the space under it before continuing below the cover.
+function textBeside(project, cover) {
+    const short = !project.description && project.images?.length
+    return textSpans({ cols: 4 - Math.min(cover.cols, 3), rows: short ? 1 : cover.rows })
+}
+
+// Text left, cover right (2×2 by default), the other images beside and under it
 function HeroLayout({ project, number }) {
     const cover = { cols: 2, rows: 2, ...project.cover }
     return (
         <ViewGrid wide>
-            <div className={`${textSpans({ cols: 4 - Math.min(cover.cols, 3), rows: cover.rows })} flex flex-col gap-5 order-2 md:order-none`}>
+            <div className={`${textBeside(project, cover)} flex flex-col gap-5 order-2 md:order-none`}>
                 <ProjectNumber number={number} className="text-6xl md:text-8xl" />
                 <Title project={project} className="text-2xl md:text-4xl" />
                 <Tags project={project} />
@@ -120,13 +127,13 @@ function HeroLayout({ project, number }) {
     )
 }
 
-// Cover left (2×2 by default), text right with the number at the bottom, the other images underneath
+// Cover left (2×2 by default), text right with the number at the bottom, the other images beside and under it
 function SplitLayout({ project, number }) {
     const cover = { cols: 2, rows: 2, ...project.cover }
     return (
         <ViewGrid wide>
             <Cover cover={cover} project={project} />
-            <div className={`${textSpans({ cols: 4 - Math.min(cover.cols, 3), rows: cover.rows })} flex flex-col gap-5`}>
+            <div className={`${textBeside(project, cover)} flex flex-col gap-5`}>
                 <Title project={project} className="text-2xl md:text-4xl" />
                 <Tags project={project} />
                 <Description project={project} />
@@ -178,7 +185,7 @@ const layouts = {
     gallery: GalleryLayout
 }
 
-export default function ProjectView({ project, number, total, onClose, onPrev, onNext }) {
+export default function ProjectView({ project, number, total, origin, onClose, onPrev, onNext }) {
     const closeRef = useRef(null)
     const overlayRef = useRef(null)
 
@@ -199,6 +206,27 @@ export default function ProjectView({ project, number, total, onClose, onPrev, o
         return () => document.removeEventListener('keydown', onKey)
     }, [onClose, onPrev, onNext])
 
+    // Expand out of the clicked tile until the view covers the page beside the sidebar
+    useLayoutEffect(() => {
+        const el = overlayRef.current
+        if (!origin || !el?.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+        const box = el.getBoundingClientRect()
+        const from = `inset(${origin.top - box.top}px ${box.right - origin.right}px ${box.bottom - origin.bottom}px ${origin.left - box.left}px)`
+        el.animate([{ clipPath: from }, { clipPath: 'inset(0px 0px 0px 0px)' }], {
+            duration: 450,
+            easing: 'cubic-bezier(0.2, 0, 0, 1)'
+        })
+    }, [])
+
+    // The sidebar stays visible, so following one of its links closes the view
+    useEffect(() => {
+        const onLink = (e) => {
+            if (e.target.closest?.('a[href^="#"]')) onClose()
+        }
+        document.addEventListener('click', onLink)
+        return () => document.removeEventListener('click', onLink)
+    }, [onClose])
+
     // Start each project at the top
     useEffect(() => {
         overlayRef.current?.scrollTo(0, 0)
@@ -209,17 +237,12 @@ export default function ProjectView({ project, number, total, onClose, onPrev, o
     return (
         <div
             ref={overlayRef}
-            className="fixed inset-0 z-50 bg-ink/40 overflow-y-auto"
-            onClick={(e) => {
-                if (e.target === e.currentTarget) onClose()
-            }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-view-title"
+            className="fixed inset-0 md:left-64 lg:left-72 xl:left-80 z-50 bg-paper overflow-y-auto"
         >
-            <div
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="project-view-title"
-                className="bg-paper min-h-full md:min-h-0 md:my-10 md:mx-auto md:max-w-6xl px-6 md:px-12"
-            >
+            <div className="container min-h-full flex flex-col">
                 <div className="flex items-center justify-between py-4 border-b border-ink/20 text-xs text-ink/60 tracking-wide uppercase">
                     <span>på sistone</span>
                     <div className="flex items-center gap-4">
@@ -236,7 +259,7 @@ export default function ProjectView({ project, number, total, onClose, onPrev, o
                     </div>
                 </div>
 
-                <div className="py-8 md:py-12">
+                <div className="flex-1 py-8 md:py-12">
                     <Layout project={project} number={number} />
                 </div>
 

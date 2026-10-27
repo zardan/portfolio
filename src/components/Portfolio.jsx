@@ -7,6 +7,8 @@ import { useReveal } from '../hooks/useReveal'
 export default function Portfolio() {
   const [titleRef, titleVisible] = useReveal()
   const [openIndex, setOpenIndex] = useState(null)
+  // The opened tile's position, so the project view can expand out of it
+  const [origin, setOrigin] = useState(null)
   const close = useCallback(() => setOpenIndex(null), [])
   const prev = useCallback(() => setOpenIndex((i) => (i - 1 + projects.length) % projects.length), [])
   const next = useCallback(() => setOpenIndex((i) => (i + 1) % projects.length), [])
@@ -29,7 +31,10 @@ export default function Portfolio() {
                 project={project}
                 number={index + 1}
                 index={index}
-                onOpen={() => setOpenIndex(index)}
+                onOpen={(e) => {
+                  setOrigin(e.currentTarget.getBoundingClientRect())
+                  setOpenIndex(index)
+                }}
               />
             ))}
           </div>
@@ -46,6 +51,7 @@ export default function Portfolio() {
           project={projects[openIndex]}
           number={openIndex + 1}
           total={projects.length}
+          origin={origin}
           onClose={close}
           onPrev={prev}
           onNext={next}
