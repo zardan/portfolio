@@ -109,15 +109,16 @@ const asImage = (image) => (typeof image === 'string' ? { src: image } : image)
 
 function SpanGrid({ project }) {
     const cover = { cols: 2, rows: 2, ...project.cover }
-    const images = (project.images ?? []).map(asImage)
+    const images = (project.images ?? []).map((image, i) => ({ ...asImage(image), alt: `${project.title}, bild ${i + 2}` }))
+    images.splice(cover.order ?? 0, 0, { ...cover, alt: project.title })
     return (
         <div className="view-grid-wrap">
             <div className="view-grid">
-                {[cover, ...images].map((image, i) => (
+                {images.map((image) => (
                     <Cell
                         key={image.src}
                         path={image.src}
-                        alt={i === 0 ? project.title : `${project.title}, bild ${i + 1}`}
+                        alt={image.alt}
                         position={image.position}
                         className={`${colSpans[image.cols] ?? colSpans[1]} ${rowSpans[image.rows] ?? rowSpans[1]}`}
                     />
