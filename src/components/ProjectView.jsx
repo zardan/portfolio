@@ -53,8 +53,8 @@ function Description({ project, className = '' }) {
 
 // The project's other images, as cells in the same grid as the cover and text
 function Images({ project, className }) {
-    return (project.images ?? []).map((path, i) => (
-        <Cell key={path} path={path} alt={`${project.title}, bild ${i + 2}`} className={className} />
+    return (project.images ?? []).map(asImage).map((image, i) => (
+        <Cell key={image.src} path={image.src} alt={`${project.title}, bild ${i + 2}`} position={image.position} className={className} />
     ))
 }
 
@@ -100,7 +100,34 @@ function SplitLayout({ project, number }) {
     )
 }
 
-// Title row on top, a wide cover with the text beside it, the other images in a row of four underneath
+// Spans in the project view grid. On mobile the grid has two columns, so spans are capped at 2 there.
+const colSpans = { 1: 'col-span-1', 2: 'col-span-2 md:col-span-2', 3: 'col-span-2 md:col-span-3' }
+const rowSpans = { 1: 'row-span-1', 2: 'row-span-2', 3: 'row-span-2 md:row-span-3' }
+
+// Images may be a path, or { src, cols, rows, position } to span more of the grid
+const asImage = (image) => (typeof image === 'string' ? { src: image } : image)
+
+function SpanGrid({ project }) {
+    const cover = { cols: 2, rows: 2, ...project.cover }
+    const images = (project.images ?? []).map(asImage)
+    return (
+        <div className="view-grid-wrap">
+            <div className="view-grid">
+                {[cover, ...images].map((image, i) => (
+                    <Cell
+                        key={image.src}
+                        path={image.src}
+                        alt={i === 0 ? project.title : `${project.title}, bild ${i + 1}`}
+                        position={image.position}
+                        className={`${colSpans[image.cols] ?? colSpans[1]} ${rowSpans[image.rows] ?? rowSpans[1]}`}
+                    />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+// Title row on top, the images as a grid of square cells with the text in a narrow column beside it
 function GalleryLayout({ project, number }) {
     return (
         <>
@@ -108,18 +135,14 @@ function GalleryLayout({ project, number }) {
                 <Title project={project} className="text-2xl md:text-5xl" />
                 <ProjectNumber number={number} className="text-5xl md:text-8xl shrink-0" />
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-8 mt-6 md:mt-8">
-                <Cell
-                    path={project.cover.src}
-                    alt={project.title}
-                    position={project.cover.position}
-                    className="col-span-2 md:col-span-8 aspect-[4/3]"
-                />
-                <div className="col-span-2 md:col-span-4 flex flex-col gap-5">
+            <div className="grid md:grid-cols-12 gap-6 md:gap-8 mt-6 md:mt-8">
+                <div className="md:col-span-9">
+                    <SpanGrid project={project} />
+                </div>
+                <div className="md:col-span-3 flex flex-col gap-5">
                     <Tags project={project} />
                     <Description project={project} />
                 </div>
-                <Images project={project} className="md:col-span-3 aspect-square" />
             </div>
         </>
     )
