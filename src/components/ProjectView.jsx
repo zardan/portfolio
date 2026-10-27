@@ -123,7 +123,7 @@ function GalleryLayout({ project, number }) {
     const process = project.process ?? []
     return (
         <>
-            <div className="flex items-end justify-between gap-6 pb-6 border-b border-ink/20">
+            <div className="flex items-end justify-between gap-6">
                 <Title project={project} className="text-2xl md:text-5xl" />
                 <ProjectNumber number={number} className="text-5xl md:text-8xl shrink-0" />
             </div>
@@ -139,7 +139,7 @@ function GalleryLayout({ project, number }) {
                         <Cell key={path} path={path} alt={`${project.title}, process`} className="aspect-square" />
                     ))}
                 </div>
-                <div className="md:col-span-4 flex flex-col gap-5 md:pl-8 md:border-l md:border-ink/20">
+                <div className="md:col-span-4 flex flex-col gap-5">
                     <Tags project={project} />
                     <Description project={project} />
                 </div>
