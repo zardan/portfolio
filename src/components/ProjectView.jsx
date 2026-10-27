@@ -1,27 +1,185 @@
 import React, { useEffect, useRef } from 'react'
 
-export default function ProjectView({ project, number, onClose }) {
-    const closeRef = useRef(null)
+const src = (path) => import.meta.env.BASE_URL + path
 
-    // Focus the close button on open, close on Escape, and give focus back on close
+// A fixed-ratio image cell, so every layout stays on a strict grid
+function Cell({ path, alt = '', className = '', position }) {
+    return (
+        <div className={`relative overflow-hidden bg-ink/5 ${className}`}>
+            <img
+                src={src(path)}
+                alt={alt}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={position ? { objectPosition: position } : undefined}
+            />
+        </div>
+    )
+}
+
+function ProjectNumber({ number, className = '' }) {
+    return (
+        <span className={`block font-display font-bold text-accent leading-none ${className}`}>
+            {number}.
+        </span>
+    )
+}
+
+function Title({ project, className = '' }) {
+    return (
+        <h3 id="project-view-title" className={`text-accent ${className}`}>
+            {project.title}
+        </h3>
+    )
+}
+
+function Tags({ project }) {
+    if (!project.tags?.length) return null
+    return (
+        <p className="!mb-0 text-xs text-ink/60 tracking-wide uppercase">
+            {project.tags.join(' · ')}
+        </p>
+    )
+}
+
+function Description({ project, className = '' }) {
+    if (!project.description) return null
+    return (
+        <p className={`!mb-0 text-sm leading-relaxed ${className}`}>
+            {project.description}
+        </p>
+    )
+}
+
+// Process images keep a fixed column count per layout, so a short row leaves empty grid cells
+function ProcessRow({ project, colsClass, cellClass }) {
+    const process = project.process ?? []
+    if (!process.length) return null
+    return (
+        <div className="mt-6 md:mt-8 pt-6 border-t border-ink/20">
+            <p className="text-xs text-ink/60 tracking-wide uppercase">process</p>
+            <div className={`grid grid-cols-2 ${colsClass} gap-4 md:gap-6`}>
+                {process.map((path) => (
+                    <Cell key={path} path={path} alt={`${project.title}, process`} className={cellClass} />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+// Text left, cover right, process row underneath
+function HeroLayout({ project, number }) {
+    return (
+        <>
+            <div className="grid md:grid-cols-12 gap-6 md:gap-8">
+                <div className="md:col-span-5 flex flex-col gap-5 order-2 md:order-1">
+                    <ProjectNumber number={number} className="text-6xl md:text-8xl" />
+                    <Title project={project} className="text-2xl md:text-4xl" />
+                    <Tags project={project} />
+                    <Description project={project} className="md:mt-auto" />
+                </div>
+                <Cell
+                    path={project.cover.src}
+                    alt={project.title}
+                    position={project.cover.position}
+                    className="md:col-span-7 aspect-[5/4] order-1 md:order-2"
+                />
+            </div>
+            <ProcessRow project={project} colsClass="md:grid-cols-4" cellClass="aspect-square" />
+        </>
+    )
+}
+
+// Cover left, text right with the number at the bottom, process row underneath
+function SplitLayout({ project, number }) {
+    return (
+        <>
+            <div className="grid md:grid-cols-12 gap-6 md:gap-8">
+                <Cell
+                    path={project.cover.src}
+                    alt={project.title}
+                    position={project.cover.position}
+                    className="md:col-span-6 aspect-[4/5]"
+                />
+                <div className="md:col-span-6 flex flex-col gap-5">
+                    <Title project={project} className="text-2xl md:text-4xl" />
+                    <Tags project={project} />
+                    <Description project={project} />
+                    <ProjectNumber number={number} className="text-6xl md:text-8xl md:mt-auto md:self-end" />
+                </div>
+            </div>
+            <ProcessRow project={project} colsClass="md:grid-cols-3" cellClass="aspect-[4/3]" />
+        </>
+    )
+}
+
+// Title row on top, then the cover and process images as one square grid with the text beside it
+function GalleryLayout({ project, number }) {
+    const process = project.process ?? []
+    return (
+        <>
+            <div className="flex items-end justify-between gap-6 pb-6 border-b border-ink/20">
+                <Title project={project} className="text-2xl md:text-5xl" />
+                <ProjectNumber number={number} className="text-5xl md:text-8xl shrink-0" />
+            </div>
+            <div className="grid md:grid-cols-12 gap-6 md:gap-8 mt-6 md:mt-8">
+                <div className="md:col-span-8 grid grid-cols-3 gap-3 md:gap-4">
+                    <Cell
+                        path={project.cover.src}
+                        alt={project.title}
+                        position={project.cover.position}
+                        className="col-span-2 row-span-2 aspect-square"
+                    />
+                    {process.map((path) => (
+                        <Cell key={path} path={path} alt={`${project.title}, process`} className="aspect-square" />
+                    ))}
+                </div>
+                <div className="md:col-span-4 flex flex-col gap-5 md:pl-8 md:border-l md:border-ink/20">
+                    <Tags project={project} />
+                    <Description project={project} />
+                </div>
+            </div>
+        </>
+    )
+}
+
+const layouts = {
+    hero: HeroLayout,
+    split: SplitLayout,
+    gallery: GalleryLayout
+}
+
+export default function ProjectView({ project, number, total, onClose, onPrev, onNext }) {
+    const closeRef = useRef(null)
+    const overlayRef = useRef(null)
+
+    // Focus the close button on open, handle keys, and give focus back on close
     useEffect(() => {
         const previous = document.activeElement
         closeRef.current?.focus()
+        return () => previous?.focus?.()
+    }, [])
 
+    useEffect(() => {
         const onKey = (e) => {
             if (e.key === 'Escape') onClose()
+            if (e.key === 'ArrowLeft') onPrev()
+            if (e.key === 'ArrowRight') onNext()
         }
         document.addEventListener('keydown', onKey)
-        return () => {
-            document.removeEventListener('keydown', onKey)
-            previous?.focus?.()
-        }
-    }, [onClose])
+        return () => document.removeEventListener('keydown', onKey)
+    }, [onClose, onPrev, onNext])
 
-    const src = (path) => import.meta.env.BASE_URL + path
+    // Start each project at the top
+    useEffect(() => {
+        overlayRef.current?.scrollTo(0, 0)
+    }, [project.id])
+
+    const Layout = layouts[project.layout] ?? HeroLayout
 
     return (
         <div
+            ref={overlayRef}
             className="fixed inset-0 z-50 bg-ink/40 overflow-y-auto"
             onClick={(e) => {
                 if (e.target === e.currentTarget) onClose()
@@ -31,61 +189,36 @@ export default function ProjectView({ project, number, onClose }) {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="project-view-title"
-                className="relative bg-paper min-h-full md:min-h-0 md:my-10 md:mx-auto md:max-w-4xl px-6 py-16 md:p-12"
+                className="bg-paper min-h-full md:min-h-0 md:my-10 md:mx-auto md:max-w-6xl px-6 md:px-12"
             >
-                <button
-                    ref={closeRef}
-                    type="button"
-                    onClick={onClose}
-                    aria-label="Stäng"
-                    className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center text-2xl hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                >
-                    ✕
-                </button>
-
-                <img
-                    src={src(project.cover.src)}
-                    alt={project.title}
-                    className="w-full max-h-[75vh] object-contain"
-                />
-
-                <div className="mt-8 md:mt-10 md:grid md:grid-cols-[auto_1fr] md:gap-8">
-                    <span className="block font-display font-bold text-accent text-4xl md:text-5xl leading-none">
-                        {number}.
-                    </span>
-                    <div>
-                        <h3 id="project-view-title" className="text-accent text-2xl md:text-3xl mt-4 md:mt-0">
-                            {project.title}
-                        </h3>
-                        {project.tags?.length > 0 && (
-                            <p className="text-xs text-ink/60 mt-3 tracking-wide uppercase">
-                                {project.tags.join(' · ')}
-                            </p>
-                        )}
-                        {project.description && (
-                            <p className="mt-6 text-sm md:text-base leading-relaxed max-w-xl">
-                                {project.description}
-                            </p>
-                        )}
+                <div className="flex items-center justify-between py-4 border-b border-ink/20 text-xs text-ink/60 tracking-wide uppercase">
+                    <span>på sistone</span>
+                    <div className="flex items-center gap-4">
+                        <span>{number} / {total}</span>
+                        <button
+                            ref={closeRef}
+                            type="button"
+                            onClick={onClose}
+                            aria-label="Stäng"
+                            className="w-8 h-8 -mr-2 flex items-center justify-center text-lg text-ink hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        >
+                            ✕
+                        </button>
                     </div>
                 </div>
 
-                {project.process?.length > 0 && (
-                    <div className="mt-10 md:mt-14">
-                        <h4 className="text-lg md:text-xl mb-4 pb-2 border-b border-ink/20">process</h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-                            {project.process.map((path) => (
-                                <img
-                                    key={path}
-                                    src={src(path)}
-                                    alt={`${project.title}, process`}
-                                    loading="lazy"
-                                    className="w-full h-auto"
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )}
+                <div className="py-8 md:py-12">
+                    <Layout project={project} number={number} />
+                </div>
+
+                <div className="flex items-center justify-between py-4 border-t border-ink/20 text-xs tracking-wide uppercase">
+                    <button type="button" onClick={onPrev} className="hover:text-accent focus:outline-none focus-visible:text-accent">
+                        ← föregående
+                    </button>
+                    <button type="button" onClick={onNext} className="hover:text-accent focus:outline-none focus-visible:text-accent">
+                        nästa →
+                    </button>
+                </div>
             </div>
         </div>
     )

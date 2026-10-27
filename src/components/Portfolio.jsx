@@ -8,6 +8,8 @@ export default function Portfolio() {
   const [titleRef, titleVisible] = useReveal()
   const [openIndex, setOpenIndex] = useState(null)
   const close = useCallback(() => setOpenIndex(null), [])
+  const prev = useCallback(() => setOpenIndex((i) => (i - 1 + projects.length) % projects.length), [])
+  const next = useCallback(() => setOpenIndex((i) => (i + 1) % projects.length), [])
 
   return (
     <section id="portfolio">
@@ -40,7 +42,14 @@ export default function Portfolio() {
       </div>
 
       {openIndex !== null && (
-        <ProjectView project={projects[openIndex]} number={openIndex + 1} onClose={close} />
+        <ProjectView
+          project={projects[openIndex]}
+          number={openIndex + 1}
+          total={projects.length}
+          onClose={close}
+          onPrev={prev}
+          onNext={next}
+        />
       )}
     </section>
   )
