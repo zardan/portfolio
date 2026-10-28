@@ -39,10 +39,10 @@ export default function Portfolio({ view }) {
   const title = (
     <div
       ref={titleRef}
-      className={`reveal [container-type:inline-size] ${titleVisible ? 'reveal-visible' : ''}`}
+      className={`reveal [container-type:inline-size] ${wide ? 'bg-accent p-5 xl:p-6' : ''} ${titleVisible ? 'reveal-visible' : ''}`}
       style={wide ? area(heading) : undefined}
     >
-      <h2 className={`section-title ${wide ? '!pb-0' : ''}`}>
+      <h2 className={`section-title ${wide ? '!pb-0 !text-paper' : ''}`}>
         {/* Shrinks to fit its cells: "sistone" is 5.2em wide */}
         <span className="block text-[min(1em,19cqw)]">på sistone</span>
       </h2>
