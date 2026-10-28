@@ -17,7 +17,7 @@ export const projects = [
         cover: { src: 'images/lerstudie-1.jpeg', size: 'large' },
         images: [
             { src: 'videos/lerstudie.mp4', poster: 'images/lerstudie-2.jpeg', cols: 1, rows: 2 },
-            { src: 'images/lerstudie-3.jpeg', cols: 2, rows: 2, position: 'center 30%' },
+            { src: 'images/lerstudie-3.jpeg', position: 'center 30%' },
             'images/lerstudie-4.jpeg',
             'images/lerstudie-5.jpeg'
         ],
