@@ -14,7 +14,7 @@ export const projects = [
         id: 'lerstudie',
         title: 'Formtagning på lerstudie',
         layout: 'gallery',
-        cover: { src: 'images/lerstudie-1.jpeg', size: 'large', cols: 2, rows: 1, position: 'center 65%' },
+        cover: { src: 'images/lerstudie-1.jpeg', size: 'wide', cols: 2, rows: 1, position: 'center 65%' },
         images: [
             { src: 'videos/lerstudie.mp4', poster: 'images/lerstudie-2.jpeg', cols: 1, rows: 2 },
             'images/lerstudie-5.jpeg',
@@ -41,7 +41,7 @@ export const projects = [
         id: 'bowls',
         title: 'Skålar i stengods',
         layout: 'hero',
-        cover: { src: 'images/bowl-1.jpeg', size: 'large' },
+        cover: { src: 'images/bowl-1.jpeg', size: 'wide' },
         images: ['images/bowl-2.jpeg', 'images/bowl-3.jpeg'],
         description: '',
         tags: ['stengodslera', 'keramik']
