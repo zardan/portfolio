@@ -24,6 +24,9 @@ export function useActiveSection(sectionIds) {
           bestVisible = visible
         }
       })
+      // At the bottom of the page the last section is the one being read, however short
+      const last = document.getElementById(sectionIds[sectionIds.length - 1])
+      if (last && last.getBoundingClientRect().bottom <= viewport + 1) best = last.id
       setActiveSection(best)
     }
 
