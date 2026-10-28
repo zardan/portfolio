@@ -85,7 +85,7 @@ export default function Portfolio({ view }) {
                 className="group flex flex-col justify-between p-3 lg:p-4 text-left bg-ink/5 hover:bg-ink/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 style={wide ? area(layout.more) : undefined}
               >
-                <span className="text-xs text-ink/60">
+                <span className="text-small text-muted">
                   {hidden.length} till
                 </span>
                 <span className="font-display font-bold text-accent text-5xl lg:text-6xl leading-none transition-[letter-spacing] duration-300 group-hover:tracking-widest">
@@ -96,7 +96,7 @@ export default function Portfolio({ view }) {
           </div>
         </div>
 
-        <p className="mt-6 md:mt-8 text-sm md:whitespace-nowrap">
+        <p className="mt-6 md:mt-8 text-body md:whitespace-nowrap">
           Jag tar emot beställningar. Säg till om något fångar ditt öga.{' '}
           <a href="#kontakt" className="underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">Kontakt →</a>
         </p>

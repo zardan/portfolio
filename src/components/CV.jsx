@@ -17,13 +17,13 @@ export default function CV() {
                             <h3 className="text-xl md:text-2xl mb-4 pb-2 border-b border-ink/20">
                                 {group.heading}
                             </h3>
-                            <dl className="text-sm">
+                            <dl className="text-body">
                                 {group.items.map((item) => (
                                     <div key={item.title} className="grid grid-cols-[6.5rem_1fr] md:grid-cols-[9rem_1fr] gap-4 py-2">
-                                        <dt className="text-ink/60">{item.years}</dt>
+                                        <dt className="text-muted">{item.years}</dt>
                                         <dd>
                                             <span className="font-normal">{item.title}</span>
-                                            {item.detail && <span className="block text-ink/60">{item.detail}</span>}
+                                            {item.detail && <span className="block text-muted">{item.detail}</span>}
                                         </dd>
                                     </div>
                                 ))}

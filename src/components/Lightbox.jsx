@@ -48,7 +48,7 @@ export default function Lightbox({ media, index, onIndex, onClose }) {
             onTouchEnd={onTouchEnd}
         >
             <div className="flex items-center justify-between px-6 md:px-10 pt-6 md:pt-8">
-                <span className="text-xs text-ink/60 tracking-wide">
+                <span className="text-small text-muted tracking-wide">
                     <span className="text-accent">{pad(index + 1)}</span> / {pad(media.length)}
                 </span>
                 <button
@@ -111,7 +111,7 @@ export default function Lightbox({ media, index, onIndex, onClose }) {
                 )}
             </div>
 
-            <p className="!mb-0 px-6 md:px-10 pb-6 md:pb-8 text-xs text-ink/60 truncate">{item.alt}</p>
+            <p className="!mb-0 px-6 md:px-10 pb-6 md:pb-8 text-small text-muted truncate">{item.alt}</p>
         </div>
     )
 }

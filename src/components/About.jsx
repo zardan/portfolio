@@ -8,7 +8,7 @@ export default function About() {
         <section id="om-mig">
             <div ref={ref} className={`container reveal ${visible ? 'reveal-visible' : ''}`}>
                 {/* Grid: heading and text beside two photos, then and now, with the red block */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 text-sm md:text-base leading-relaxed">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 text-body leading-relaxed">
                     <div className="col-span-2 md:row-span-2 flex flex-col justify-between gap-8 pb-4 md:pb-0 md:pr-5">
                         <h2 className="section-title !pb-0">
                             Om mig
@@ -30,10 +30,10 @@ export default function About() {
                     />
 
                     <div className="[container-type:inline-size] aspect-square bg-accent text-paper p-4 lg:p-6 flex flex-col justify-between">
-                        <span className="text-xs">just nu</span>
+                        <span className="text-small">just nu</span>
                         <div>
                             <p className="font-display text-[21cqw] whitespace-nowrap leading-none !mb-2">26—27</p>
-                            <p className="text-xs lg:text-sm !mb-0">Nyckelviksskolan</p>
+                            <p className="text-small !mb-0">Nyckelviksskolan</p>
                         </div>
                     </div>
 

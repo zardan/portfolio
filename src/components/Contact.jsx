@@ -20,7 +20,7 @@ export default function Contact() {
         >
           Här finns jag
         </h2>
-        <ul className="max-w-3xl text-sm border-t border-ink/20">
+        <ul className="max-w-3xl text-body border-t border-ink/20">
           {links.map((link) => (
             <li key={link.label} className="border-b border-ink/20">
               <a
@@ -30,7 +30,7 @@ export default function Contact() {
                 className="group flex items-center gap-4 py-4 hover:text-accent transition-colors"
               >
                 <span className="flex-1 min-w-0 md:grid md:grid-cols-[9rem_1fr] md:gap-4">
-                  <span className="block text-xs md:text-sm text-ink/60 group-hover:text-accent transition-colors">{link.label}</span>
+                  <span className="block text-small text-muted group-hover:text-accent transition-colors">{link.label}</span>
                   <span className="block break-all">{link.text}</span>
                 </span>
                 <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
