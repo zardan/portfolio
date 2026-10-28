@@ -1,95 +1,123 @@
 # Portfolio
 
-Sara Cedernaes portfolio, byggd med Vite, React och Tailwind. Live på https://zardan.github.io/portfolio/
+Sara Cedernaes' portfolio, built with Vite, React and Tailwind. Live at https://zardan.github.io/portfolio/
 
-## Köra lokalt
+The site copy is in Swedish.
+
+## Run locally
 
 ```bash
 npm install
-npm run dev       # utvecklingsserver med live-uppdatering
-npm run build     # bygg, kolla att allt fungerar
-npm run preview   # visa byggd version
+npm run dev       # dev server with live reload
+npm run build     # production build, checks that everything compiles
+npm run preview   # serve the production build
 ```
 
-## Publicera
+## Publish
 
-Allt som hamnar på `main` byggs och publiceras automatiskt till GitHub Pages (`.github/workflows/main.yml`). Arbeta i en egen branch och merga via en pull request när det ser bra ut.
+Everything that lands on `main` is built and deployed to GitHub Pages automatically (`.github/workflows/main.yml`). Work on a branch and merge through a pull request when it looks right.
 
-## Var ändrar jag vad?
+## Where to edit what
 
-| Vad | Fil |
+| What | File |
 | --- | --- |
-| Intro (överst) | `src/components/Intro.jsx` |
-| Om mig | `src/components/About.jsx` |
-| Projekt i "på sistone" | `src/data/projects.js` + bilder i `public/images/` |
-| Raden under projekten (beställningar) | `src/components/Portfolio.jsx` |
+| Intro (top of the page) | `src/components/Intro.jsx` |
+| About ("om mig") | `src/components/About.jsx` |
+| Projects ("på sistone") | `src/data/projects.js`, images in `public/images/` |
+| The line under the projects (commissions) | `src/components/Portfolio.jsx` |
 | CV | `src/data/cv.js` |
-| Kontaktlänkar | `links` överst i `src/components/Contact.jsx` |
-| Menyn i sidomenyn | `sections` i `src/App.jsx` |
-| Färger och typsnitt | `tailwind.config.cjs` (`paper`, `ink`, `accent`, `display`) |
+| Contact links | `links` at the top of `src/components/Contact.jsx` |
+| Sidebar menu | `sections` in `src/App.jsx` |
+| Colours and fonts | `tailwind.config.cjs` (`paper`, `ink`, `accent`, `display`) |
 
-Rubriker skrivs alltid med gemener (sätts i CSS), så skriv dem som du vill att de ska läsas.
+Headings are always shown in lowercase (set in CSS), so write them however you like.
 
 ## CV
 
-Varje del i `src/data/cv.js` har en rubrik och en lista med rader:
+Each part of `src/data/cv.js` has a heading and a list of rows:
 
 ```js
 { years: '2026–2027', title: 'Nyckelviksskolan', detail: 'Färg, form och hantverk.' }
 ```
 
-Lägg till en rad i rätt lista, nyast överst. En ny del (t.ex. "Utställningar") är ett nytt `{ heading, items }`-objekt.
+Add a row to the right list, newest first. A new part (e.g. "Utställningar") is a new `{ heading, items }` object.
 
-## Projekt ("på sistone")
+## Projects ("på sistone")
 
-### 1. Bilder
+### 1. Images
 
-Lägg bilderna i `public/images/`. Skala ner dem först (ca 1600 px på längsta sidan) och ta bort platsdata (GPS) som mobilen sparar i bilden.
+Put the images in `public/images/`. Scale them down first (about 1600 px on the longest side) and strip metadata, since phone photos carry GPS location. For example with ImageMagick:
 
-### 2. Lägg till projektet
+```bash
+magick input.jpg -auto-orient -resize "1600x1600>" -strip -quality 85 public/images/name-1.jpeg
+```
 
-Lägg ett nytt objekt i `src/data/projects.js`. Ordningen i listan är ordningen på sidan (och siffran 1., 2. …).
+### 2. Add the project
+
+Add an object to `src/data/projects.js`. The order of the list is the order on the page (and the numbers 1., 2. …).
 
 ```js
 {
-    id: 'skalar',                      // kort, unikt, utan å/ä/ö – blir länken #portfolio/skalar
+    id: 'bowls',                       // short, unique, lowercase a–z and hyphens; becomes the link #portfolio/bowls
     title: 'Skålar i stengods',
-    layout: 'hero',                    // 'hero', 'split' eller 'gallery'
+    layout: 'hero',                    // 'hero', 'split' or 'gallery', see "Choosing a layout"
     cover: { src: 'images/bowl-1.jpeg', size: 'large' },
     images: ['images/bowl-2.jpeg', 'images/bowl-3.jpeg'],
-    description: 'Valfri text som visas i projektvyn.',
+    description: 'Optional text shown in the project view.',
     tags: ['stengodslera', 'keramik']
 }
 ```
 
-- `cover` är huvudbilden. Den visas i griden på sidan och i projektvyn.
-- `images` är övriga bilder, som bara syns i projektvyn.
-- `description` kan vara tom (`''`).
+- `cover` is the main image. It is the tile on the page and the largest image in the project view. It does not have to be the finished piece; pick the strongest image.
+- `images` are the other images, shown only in the project view.
+- `description` can be empty (`''`).
 
-### 3. Storlek i griden på sidan
+### 3. Tile size on the page
 
-`cover.size` styr hur stor rutan blir på sidan: `'small'` (1×1), `'wide'` (2×1), `'tall'` (1×2) eller `'large'` (2×2). Blandningen avgör om griden går jämnt ut, så kolla att det inte blir hål.
+`cover.size` sets the tile in the grid on the page: `'small'` (1×1), `'wide'` (2×1), `'tall'` (1×2) or `'large'` (2×2). The grid has 4 columns on desktop and 2 on mobile, and the mix of sizes decides whether it fills without holes, so check it after adding a project.
 
-Visar rutan fel del av bilden kan du flytta beskärningen med `cover.position`, t.ex. `position: 'center 60%'`.
+If the tile shows the wrong part of the image, move the crop with `cover.position`, e.g. `position: 'center 60%'`.
 
-### 4. Projektvyn (när man klickar på ett projekt)
+### 4. The project view
 
-`layout` väljer upplägg:
-
-- **hero**: texten till vänster och huvudbilden till höger, övriga bilder bredvid och under.
-- **split**: huvudbilden till vänster och texten till höger, med siffran nere i hörnet.
-- **gallery**: titeln överst, bilderna i ett rutnät och texten i en smal kolumn bredvid.
-
-Bilderna ligger i ett rutnät av kvadratiska rutor, och varje bild kan spänna över 1–3 kolumner och rader:
+Clicking a tile opens the project view. Every layout places the images in a grid of square cells, and each image can span 1–3 columns and rows:
 
 ```js
 images: [
-    { src: 'images/yann-4.jpeg', cols: 1, rows: 2 },   // stående, två rader hög
-    'images/yann-1.jpeg'                                // bara sökvägen = 1×1
+    { src: 'images/yann-4.jpeg', cols: 1, rows: 2 },   // portrait, two rows tall
+    'images/yann-1.jpeg'                                // a plain path is 1×1
 ]
 ```
 
-- Huvudbilden är 2×2 om du inte anger `cols`/`rows` på `cover`.
-- I `gallery` kan `cover.order` flytta huvudbilden längre in bland bilderna (`order: 1` = som bild nummer två).
-- I `hero` och `split` tar texten bara en rad om projektet saknar description, så att bilderna fyller ut bredvid huvudbilden.
-- På mobilen har rutnätet två kolumner, så större spann krymps till 2.
+- The cover is 2×2 unless `cols`/`rows` are set on `cover`.
+- On mobile the grid has 2 columns, so larger spans shrink to 2.
+
+| Layout | Arrangement |
+| --- | --- |
+| `hero` | 4 columns. Text on the left, cover on the right, other images beside and below. Without a description the text takes one row and the images fill the space under it, next to the cover. |
+| `split` | 4 columns. Cover on the left, text on the right with the project number in the bottom corner, other images below. Without a description the text takes one row, as in `hero`. |
+| `gallery` | Title on top, then a 3-column image grid with the tags and description in a narrow column beside it. `cover.order` moves the cover further into the image list (`order: 1` = second image). |
+
+## Choosing a layout
+
+Pick from the content you have. The first rule that fits wins.
+
+1. **3 or more images besides the cover, or a project about a place, event, course or process** (a workshop, residency, trip, a series of steps): use **`gallery`**. No single image has to carry it, and mixed orientations work well with spans.
+2. **A description of more than a couple of sentences, with 0–2 other images**: use **`split`**. The text gets a full half of the view, so it suits a project with a story.
+3. **Otherwise (a single object or a small series, little or no text, 0–3 other images)**: use **`hero`**. This is the default and suits a finished piece that the cover photo shows well.
+
+### Spans by image shape
+
+- Portrait image: `cols: 1, rows: 2`
+- Landscape image: `cols: 2, rows: 1`
+- Square or detail shot: 1×1 (just the path)
+- The image that should dominate: 2×2 (the cover by default)
+
+### Fill the grid without holes
+
+Count the cells. The total should fill whole rows: 4 columns in `hero` and `split`, 3 in `gallery`.
+
+- **`hero` / `split` with a 2×2 cover**: the text fills the other two columns beside the cover. With no description, two 1×1 images fill the row under the text. Further images go in rows of four 1×1 (or two 2×1).
+- **`gallery` with a 2×2 cover**: one portrait (1×2) beside the cover fills the first two rows. After that, add images in threes (three 1×1, or a 2×1 plus a 1×1).
+
+Example (`gallery`, from the YANN project): one portrait 1×2 first, then the 2×2 cover (`order: 1`), then three 1×1 images. That is 2 + 4 + 3 = 9 cells, three full rows.
