@@ -1,24 +1,123 @@
-# Portfolio (Vite + React + Tailwind)
+# Portfolio
 
-Minimal starter scaffold for a modular portfolio using Vite, React and Tailwind CSS.
+Sara Cedernaes' portfolio, built with Vite, React and Tailwind. Live at https://zardan.github.io/portfolio/
 
-Quick start
+The site copy is in Swedish.
+
+## Run locally
 
 ```bash
-# install dependencies
 npm install
-
-# start dev server
-npm run dev
+npm run dev       # dev server with live reload
+npm run build     # production build, checks that everything compiles
+npm run preview   # serve the production build
 ```
 
-Build
+## Publish
+
+Everything that lands on `main` is built and deployed to GitHub Pages automatically (`.github/workflows/main.yml`). Work on a branch and merge through a pull request when it looks right.
+
+## Where to edit what
+
+| What | File |
+| --- | --- |
+| Intro (top of the page) | `src/components/Intro.jsx` |
+| About ("om mig") | `src/components/About.jsx` |
+| Projects ("på sistone") | `src/data/projects.js`, images in `public/images/` |
+| The line under the projects (commissions) | `src/components/Portfolio.jsx` |
+| CV | `src/data/cv.js` |
+| Contact links | `links` at the top of `src/components/Contact.jsx` |
+| Sidebar menu | `sections` in `src/App.jsx` |
+| Colours and fonts | `tailwind.config.cjs` (`paper`, `ink`, `accent`, `display`) |
+
+Headings are always shown in lowercase (set in CSS), so write them however you like.
+
+## CV
+
+Each part of `src/data/cv.js` has a heading and a list of rows:
+
+```js
+{ years: '2026–2027', title: 'Nyckelviksskolan', detail: 'Färg, form och hantverk.' }
+```
+
+Add a row to the right list, newest first. A new part (e.g. "Utställningar") is a new `{ heading, items }` object.
+
+## Projects ("på sistone")
+
+### 1. Images
+
+Put the images in `public/images/`. Scale them down first (about 1600 px on the longest side) and strip metadata, since phone photos carry GPS location. For example with ImageMagick:
 
 ```bash
-npm run build
-npm run preview
+magick input.jpg -auto-orient -resize "1600x1600>" -strip -quality 85 public/images/name-1.jpeg
 ```
 
-Notes
-- Sections are in `src/components` and can be added/removed easily.
-- Add projects in `src/data/projects.js`.
+### 2. Add the project
+
+Add an object to `src/data/projects.js`. The order of the list is the order on the page (and the numbers 1., 2. …).
+
+```js
+{
+    id: 'bowls',                       // short, unique, lowercase a–z and hyphens; becomes the link #portfolio/bowls
+    title: 'Skålar i stengods',
+    layout: 'hero',                    // 'hero', 'split' or 'gallery', see "Choosing a layout"
+    cover: { src: 'images/bowl-1.jpeg', size: 'large' },
+    images: ['images/bowl-2.jpeg', 'images/bowl-3.jpeg'],
+    description: 'Optional text shown in the project view.',
+    tags: ['stengodslera', 'keramik']
+}
+```
+
+- `cover` is the main image. It is the tile on the page and the largest image in the project view. It does not have to be the finished piece; pick the strongest image.
+- `images` are the other images, shown only in the project view.
+- `description` can be empty (`''`).
+
+### 3. Tile size on the page
+
+`cover.size` sets the tile in the grid on the page: `'small'` (1×1), `'wide'` (2×1), `'tall'` (1×2) or `'large'` (2×2). The grid has 4 columns on desktop and 2 on mobile, and the mix of sizes decides whether it fills without holes, so check it after adding a project.
+
+If the tile shows the wrong part of the image, move the crop with `cover.position`, e.g. `position: 'center 60%'`.
+
+### 4. The project view
+
+Clicking a tile opens the project view. Every layout places the images in a grid of square cells, and each image can span 1–3 columns and rows:
+
+```js
+images: [
+    { src: 'images/yann-4.jpeg', cols: 1, rows: 2 },   // portrait, two rows tall
+    'images/yann-1.jpeg'                                // a plain path is 1×1
+]
+```
+
+- The cover is 2×2 unless `cols`/`rows` are set on `cover`.
+- On mobile the grid has 2 columns, so larger spans shrink to 2.
+
+| Layout | Arrangement |
+| --- | --- |
+| `hero` | 4 columns. Text on the left, cover on the right, other images beside and below. Without a description the text takes one row and the images fill the space under it, next to the cover. |
+| `split` | 4 columns. Cover on the left, text on the right with the project number in the bottom corner, other images below. Without a description the text takes one row, as in `hero`. |
+| `gallery` | Title on top, then a 3-column image grid with the tags and description in a narrow column beside it. `cover.order` moves the cover further into the image list (`order: 1` = second image). |
+
+## Choosing a layout
+
+Pick from the content you have. The first rule that fits wins.
+
+1. **3 or more images besides the cover, or a project about a place, event, course or process** (a workshop, residency, trip, a series of steps): use **`gallery`**. No single image has to carry it, and mixed orientations work well with spans.
+2. **A description of more than a couple of sentences, with 0–2 other images**: use **`split`**. The text gets a full half of the view, so it suits a project with a story.
+3. **Otherwise (a single object or a small series, little or no text, 0–3 other images)**: use **`hero`**. This is the default and suits a finished piece that the cover photo shows well.
+
+### Spans by image shape
+
+- Portrait image: `cols: 1, rows: 2`
+- Landscape image: `cols: 2, rows: 1`
+- Square or detail shot: 1×1 (just the path)
+- The image that should dominate: 2×2 (the cover by default)
+
+### Fill the grid without holes
+
+Count the cells. The total should fill whole rows: 4 columns in `hero` and `split`, 3 in `gallery`.
+
+- **`hero` / `split` with a 2×2 cover**: the text fills the other two columns beside the cover. With no description, two 1×1 images fill the row under the text. Further images go in rows of four 1×1 (or two 2×1).
+- **`gallery` with a 2×2 cover**: one portrait (1×2) beside the cover fills the first two rows. After that, add images in threes (three 1×1, or a 2×1 plus a 1×1).
+
+Example (`gallery`, from the YANN project): one portrait 1×2 first, then the 2×2 cover (`order: 1`), then three 1×1 images. That is 2 + 4 + 3 = 9 cells, three full rows.
