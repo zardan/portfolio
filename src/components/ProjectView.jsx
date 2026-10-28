@@ -1,4 +1,5 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import Lightbox from './Lightbox'
 
 const src = (path) => import.meta.env.BASE_URL + path
 
@@ -7,11 +8,17 @@ const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)'
 
 // An image cell that fills its grid area, so every layout stays on a strict grid.
 // A video path (.mp4, .webm, .mov) plays as a short silent loop, like a moving image.
-function Cell({ path, alt = '', className = '', position, poster }) {
+// Clicking a cell opens it enlarged (onOpen).
+function Cell({ path, alt = '', className = '', position, poster, onOpen }) {
     const media = 'absolute inset-0 w-full h-full object-cover'
     const style = position ? { objectPosition: position } : undefined
     return (
-        <div className={`relative overflow-hidden bg-ink/5 ${className}`}>
+        <button
+            type="button"
+            onClick={onOpen}
+            aria-label={`Förstora: ${alt}`}
+            className={`relative block overflow-hidden bg-ink/5 cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${className}`}
+        >
             {isVideo(path) ? (
                 <video
                     src={src(path)}
@@ -29,7 +36,7 @@ function Cell({ path, alt = '', className = '', position, poster }) {
             ) : (
                 <img src={src(path)} alt={alt} loading="lazy" className={media} style={style} />
             )}
-        </div>
+        </button>
     )
 }
 
@@ -88,6 +95,16 @@ const textSpans = ({ cols, rows }) => `col-span-2 ${textCols[cols] ?? textCols[2
 // poster is a still image shown while a video loads.
 const asImage = (image) => (typeof image === 'string' ? { src: image } : image)
 
+// The cover and images in the order they are shown, each with its alt text; the lightbox steps
+// through the same list. In 'gallery', cover.order places the cover among the images (0 = first).
+function projectMedia(project) {
+    const cover = { cols: 2, rows: 2, ...project.cover, alt: project.title }
+    const images = (project.images ?? []).map((image, i) => ({ ...asImage(image), alt: `${project.title}, bild ${i + 2}` }))
+    const at = project.layout === 'gallery' ? cover.order ?? 0 : 0
+    images.splice(at, 0, cover)
+    return images
+}
+
 function ViewGrid({ wide = false, children }) {
     return (
         <div className={`view-grid-wrap ${wide ? 'view-grid-wrap--wide' : ''}`}>
@@ -96,29 +113,29 @@ function ViewGrid({ wide = false, children }) {
     )
 }
 
-function Cover({ cover, project, className = '' }) {
+// One cover or image from projectMedia, opening the lightbox at its place in the list
+function MediaCell({ media, index, onEnlarge, className = '' }) {
+    const item = media[index]
     return (
         <Cell
-            path={cover.src}
-            alt={project.title}
-            position={cover.position}
-            poster={cover.poster}
-            className={`${spans(cover)} ${className}`}
+            path={item.src}
+            alt={item.alt}
+            position={item.position}
+            poster={item.poster}
+            onOpen={() => onEnlarge(index)}
+            className={`${spans(item)} ${className}`}
         />
     )
 }
 
+function Cover({ media, onEnlarge, className = '' }) {
+    return <MediaCell media={media} index={0} onEnlarge={onEnlarge} className={className} />
+}
+
 // The project's other images, after the cover and text in the same grid
-function Images({ project, className = '' }) {
-    return (project.images ?? []).map(asImage).map((image, i) => (
-        <Cell
-            key={image.src}
-            path={image.src}
-            alt={`${project.title}, bild ${i + 2}`}
-            position={image.position}
-            poster={image.poster}
-            className={`${spans(image)} ${className}`}
-        />
+function Images({ media, onEnlarge, className = '' }) {
+    return media.slice(1).map((item, i) => (
+        <MediaCell key={item.src} media={media} index={i + 1} onEnlarge={onEnlarge} className={className} />
     ))
 }
 
@@ -130,8 +147,8 @@ function textBeside(project, cover) {
 }
 
 // Text left, cover right (2×2 by default), the other images beside and under it
-function HeroLayout({ project, number }) {
-    const cover = { cols: 2, rows: 2, ...project.cover }
+function HeroLayout({ project, number, media, onEnlarge }) {
+    const cover = media[0]
     return (
         <ViewGrid wide>
             <div className={`${textBeside(project, cover)} flex flex-col gap-5 order-2 md:order-none`}>
@@ -140,35 +157,32 @@ function HeroLayout({ project, number }) {
                 <Tags project={project} />
                 <Description project={project} className="md:mt-auto" />
             </div>
-            <Cover cover={cover} project={project} className="order-1 md:order-none" />
-            <Images project={project} className="order-3 md:order-none" />
+            <Cover media={media} onEnlarge={onEnlarge} className="order-1 md:order-none" />
+            <Images media={media} onEnlarge={onEnlarge} className="order-3 md:order-none" />
         </ViewGrid>
     )
 }
 
 // Cover left (2×2 by default), text right with the number at the bottom, the other images beside and under it
-function SplitLayout({ project, number }) {
-    const cover = { cols: 2, rows: 2, ...project.cover }
+function SplitLayout({ project, number, media, onEnlarge }) {
+    const cover = media[0]
     return (
         <ViewGrid wide>
-            <Cover cover={cover} project={project} />
+            <Cover media={media} onEnlarge={onEnlarge} />
             <div className={`${textBeside(project, cover)} flex flex-col gap-5`}>
                 <Title project={project} className="text-2xl md:text-4xl" />
                 <Tags project={project} />
                 <Description project={project} />
                 <ProjectNumber number={number} className="text-6xl md:text-8xl md:mt-auto md:self-end" />
             </div>
-            <Images project={project} />
+            <Images media={media} onEnlarge={onEnlarge} />
         </ViewGrid>
     )
 }
 
 // Title row on top, the images in a 3-column grid with the text in a narrow column beside it.
-// cover.order places the cover among the images (0 = first).
-function GalleryLayout({ project, number }) {
-    const cover = { cols: 2, rows: 2, ...project.cover }
-    const images = (project.images ?? []).map((image, i) => ({ ...asImage(image), alt: `${project.title}, bild ${i + 2}` }))
-    images.splice(cover.order ?? 0, 0, { ...cover, alt: project.title })
+// cover.order places the cover among the images (see projectMedia).
+function GalleryLayout({ project, number, media, onEnlarge }) {
     return (
         <>
             <div className="flex items-end justify-between gap-6">
@@ -178,15 +192,8 @@ function GalleryLayout({ project, number }) {
             <div className="grid md:grid-cols-12 gap-6 md:gap-8 mt-6 md:mt-8">
                 <div className="md:col-span-9">
                     <ViewGrid>
-                        {images.map((image) => (
-                            <Cell
-                                key={image.src}
-                                path={image.src}
-                                alt={image.alt}
-                                position={image.position}
-                                poster={image.poster}
-                                className={spans(image)}
-                            />
+                        {media.map((item, i) => (
+                            <MediaCell key={item.src} media={media} index={i} onEnlarge={onEnlarge} />
                         ))}
                     </ViewGrid>
                 </div>
@@ -208,6 +215,9 @@ const layouts = {
 export default function ProjectView({ project, number, total, origin, onClose, onPrev, onNext }) {
     const closeRef = useRef(null)
     const overlayRef = useRef(null)
+    // Index of the enlarged image in media, or null
+    const [enlarged, setEnlarged] = useState(null)
+    const media = projectMedia(project)
 
     // Focus the close button on open, handle keys, and give focus back on close
     useEffect(() => {
@@ -216,7 +226,9 @@ export default function ProjectView({ project, number, total, origin, onClose, o
         return () => previous?.focus?.()
     }, [])
 
+    // While an image is enlarged, the lightbox handles the keys
     useEffect(() => {
+        if (enlarged !== null) return
         const onKey = (e) => {
             if (e.key === 'Escape') onClose()
             if (e.key === 'ArrowLeft') onPrev()
@@ -224,7 +236,7 @@ export default function ProjectView({ project, number, total, origin, onClose, o
         }
         document.addEventListener('keydown', onKey)
         return () => document.removeEventListener('keydown', onKey)
-    }, [onClose, onPrev, onNext])
+    }, [onClose, onPrev, onNext, enlarged])
 
     // Expand out of the clicked tile until the view covers the page beside the sidebar
     useLayoutEffect(() => {
@@ -247,9 +259,10 @@ export default function ProjectView({ project, number, total, origin, onClose, o
         }
     }, [project.title])
 
-    // Start each project at the top
+    // Start each project at the top, with nothing enlarged
     useEffect(() => {
         overlayRef.current?.scrollTo(0, 0)
+        setEnlarged(null)
     }, [project.id])
 
     const Layout = layouts[project.layout] ?? HeroLayout
@@ -294,7 +307,7 @@ export default function ProjectView({ project, number, total, origin, onClose, o
                 </div>
 
                 <div className="flex-1 pt-6 pb-8 md:pb-12">
-                    <Layout project={project} number={number} />
+                    <Layout project={project} number={number} media={media} onEnlarge={setEnlarged} />
                 </div>
 
                 <div className="flex items-center justify-between py-4 border-t border-ink/20 text-xs tracking-wide uppercase">
@@ -306,6 +319,10 @@ export default function ProjectView({ project, number, total, origin, onClose, o
                     </button>
                 </div>
             </div>
+
+            {enlarged !== null && (
+                <Lightbox media={media} index={enlarged} onIndex={setEnlarged} onClose={() => setEnlarged(null)} />
+            )}
         </div>
     )
 }
