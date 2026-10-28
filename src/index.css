@@ -76,6 +76,18 @@ p {
     .work-grid-wrap {
         --cols: 5;
     }
+
+    /* Three rows that fit the screen: on a low screen the cells shrink to the height left
+       after the section padding (8rem top, 2rem bottom) and the line under the grid (4.5rem) */
+    .work-grid-wrap .work-grid {
+        --cell: min((100cqw - 4 * var(--gap)) / 5, (100svh - 14.5rem - 2 * var(--gap)) / 3);
+        grid-template-columns: repeat(5, var(--cell));
+        grid-auto-rows: var(--cell);
+    }
+
+    #portfolio {
+        padding-bottom: 2rem;
+    }
 }
 
 .work-grid {

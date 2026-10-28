@@ -24,8 +24,6 @@ const area = ({ col, row, w, h }) => ({ gridColumn: `${col} / span ${w}`, gridRo
 export default function Portfolio({ view }) {
   const [titleRef, titleVisible] = useReveal()
   const wide = useWide()
-  // "…" shows every project; the grid then grows past one screen
-  const [showAll, setShowAll] = useState(false)
   const { openId, open, show, close } = view
   const openIndex = openId ? projects.findIndex((p) => p.id === openId) : null
   // The opened tile's position, so the project view can expand out of it
@@ -34,10 +32,8 @@ export default function Portfolio({ view }) {
   const next = useCallback(() => show(projects[(openIndex + 1) % projects.length].id), [openIndex, show])
 
   const layout = overviewLayout(projects)
-  const tiles = showAll ? projects.map((project) => ({ project })) : layout.tiles
-  const hidden = projects.length - layout.tiles.length
-  // Placed only while collapsed on a wide screen; otherwise the tiles flow in order
-  const placed = wide && !showAll
+  // Projects that don't fit; "…" opens the first of them, and the project view's sidebar lists them all
+  const hidden = projects.filter((p) => !layout.tiles.some((t) => t.project === p))
 
   // In the grid's top-left cells on a wide screen (like om mig), above the grid otherwise
   const title = (
@@ -61,7 +57,7 @@ export default function Portfolio({ view }) {
           <div className="work-grid">
             {wide && title}
 
-            {tiles.map(({ project, pos }) => {
+            {layout.tiles.map(({ project, pos }) => {
               const index = projects.indexOf(project)
               return (
                 <WorkTile
@@ -69,7 +65,7 @@ export default function Portfolio({ view }) {
                   project={project}
                   number={index + 1}
                   index={index}
-                  style={placed ? area(pos) : undefined}
+                  style={wide ? area(pos) : undefined}
                   onOpen={(e) => {
                     setOrigin(e.currentTarget.getBoundingClientRect())
                     open(project.id)
@@ -78,19 +74,22 @@ export default function Portfolio({ view }) {
               )
             })}
 
-            {hidden > 0 && (
+            {hidden.length > 0 && (
               <button
                 type="button"
-                onClick={() => setShowAll((all) => !all)}
-                aria-expanded={showAll}
+                aria-label={`Visa fler projekt (${hidden.length} till)`}
+                onClick={(e) => {
+                  setOrigin(e.currentTarget.getBoundingClientRect())
+                  open(hidden[0].id)
+                }}
                 className="group flex flex-col justify-between p-3 lg:p-4 text-left bg-ink/5 hover:bg-ink/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                style={placed ? area(layout.more) : undefined}
+                style={wide ? area(layout.more) : undefined}
               >
                 <span className="text-xs text-ink/60">
-                  {showAll ? 'visa färre' : `${hidden} till`}
+                  {hidden.length} till
                 </span>
                 <span className="font-display font-bold text-accent text-5xl lg:text-6xl leading-none transition-[letter-spacing] duration-300 group-hover:tracking-widest">
-                  {showAll ? '←' : '…'}
+                  …
                 </span>
               </button>
             )}

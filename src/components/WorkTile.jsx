@@ -8,6 +8,14 @@ const spans = {
     large: 'col-span-2 row-span-2'
 }
 
+// Where the number circle sits inside the tile, varied from tile to tile
+const corners = [
+    'top-3 left-3 md:top-4 md:left-4',
+    'bottom-3 right-3 md:bottom-4 md:right-4',
+    'top-3 right-3 md:top-4 md:right-4',
+    'bottom-3 left-3 md:bottom-4 md:left-4'
+]
+
 // Only the cover and its number: title and tags show when the project is opened
 export default function WorkTile({ project, number, onOpen, index = 0, style }) {
     const [tileRef, isVisible] = useReveal()
@@ -32,8 +40,8 @@ export default function WorkTile({ project, number, onOpen, index = 0, style }) 
                 />
             </span>
 
-            {/* Red circle with the number, half over the corner like the one on the intro photo */}
-            <span className="absolute -left-2 -top-2 md:-left-3 md:-top-3 w-8 h-8 md:w-10 md:h-10 rounded-full bg-accent text-paper text-xs md:text-sm font-normal flex items-center justify-center">
+            {/* Red circle with the number, like the one on the intro photo */}
+            <span className={`absolute ${corners[index % corners.length]} w-12 h-12 md:w-16 md:h-16 rounded-full bg-accent text-paper text-xs md:text-sm font-normal flex items-center justify-center`}>
                 {number}
             </span>
         </button>

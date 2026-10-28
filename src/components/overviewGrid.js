@@ -3,7 +3,7 @@
 // top-left 2×1 and the projects fill the rest, in the order of projects.js as far as
 // they fit. If some don't fit, the last free cell is kept for the "…" tile.
 export const COLS = 5
-export const ROWS = 2
+export const ROWS = 3
 const HEADING = { col: 1, row: 1, w: 2, h: 1 }
 
 export const spanOf = (size) => ({
