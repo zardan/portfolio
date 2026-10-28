@@ -65,7 +65,7 @@ export default function Sidebar({ activeSection, sections, openProject, onShowPr
         <div>
           {/* Top margins line up the name's baseline with .section-title (index.css); update both together */}
           <a href="#start">
-            <h1 className="text-xl xl:text-3xl mt-[72px] lg:mt-[81px] xl:mt-[76px] mb-5 break-words fade-in">
+            <h1 className="text-2xl xl:text-3xl mt-[72px] lg:mt-[81px] xl:mt-[76px] mb-5 break-words fade-in">
               Sara<br />Cedernaes
             </h1>
           </a>
