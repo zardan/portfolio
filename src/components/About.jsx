@@ -1,5 +1,6 @@
 import React from 'react'
 import { useReveal } from '../hooks/useReveal'
+import Picture from './Picture'
 
 export default function About() {
     const [ref, visible] = useReveal()
@@ -23,11 +24,14 @@ export default function About() {
                         </div>
                     </div>
 
-                    <img
-                        src="images/om-mig-kth.jpeg"
-                        alt="KTH:s tegelfasad med vildvin i höstfärger"
-                        className="col-span-2 w-full aspect-[4/3] object-cover"
-                    />
+                    <div className="col-span-2">
+                        <Picture
+                            src="images/om-mig-kth.jpeg"
+                            alt="KTH:s tegelfasad med vildvin i höstfärger"
+                            sizes="(min-width: 768px) 40vw, 100vw"
+                            className="w-full h-auto aspect-[4/3] object-cover"
+                        />
+                    </div>
 
                     <div className="[container-type:inline-size] aspect-square bg-accent text-paper p-4 lg:p-6 flex flex-col justify-between">
                         <span className="text-small">just nu</span>
@@ -37,11 +41,14 @@ export default function About() {
                         </div>
                     </div>
 
-                    <img
-                        src="images/om-mig-ugn.jpeg"
-                        alt="Lergods i en vedeldad jordugn"
-                        className="w-full aspect-square object-cover object-[50%_45%]"
-                    />
+                    <div>
+                        <Picture
+                            src="images/om-mig-ugn.jpeg"
+                            alt="Lergods i en vedeldad jordugn"
+                            sizes="(min-width: 768px) 20vw, 50vw"
+                            className="w-full h-auto aspect-square object-cover object-[50%_45%]"
+                        />
+                    </div>
                 </div>
             </div>
         </section>
