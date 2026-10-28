@@ -59,7 +59,7 @@ function Title({ project, className = '' }) {
 function Tags({ project }) {
     if (!project.tags?.length) return null
     return (
-        <p className="!mb-0 text-xs text-ink/60 tracking-wide uppercase">
+        <p className="!mb-0 text-small text-muted tracking-wide uppercase">
             {project.tags.join(' · ')}
         </p>
     )
@@ -68,7 +68,7 @@ function Tags({ project }) {
 function Description({ project, className = '' }) {
     if (!project.description) return null
     return (
-        <p className={`!mb-0 text-sm leading-relaxed ${className}`}>
+        <p className={`!mb-0 text-body leading-relaxed ${className}`}>
             {project.description}
         </p>
     )
@@ -287,11 +287,11 @@ export default function ProjectView({ project, number, total, origin, onClose, o
                             <span aria-hidden="true" className="text-accent transition-transform group-hover:-translate-x-1">←</span>
                             <span className="bg-accent text-paper px-2 py-1">på sistone</span>
                         </button>
-                        <span aria-hidden="true" className="hidden md:inline text-ink/40">/</span>
-                        <span className="hidden md:inline truncate lowercase text-ink/70">{project.title}</span>
+                        <span aria-hidden="true" className="hidden md:inline text-muted">/</span>
+                        <span className="hidden md:inline truncate lowercase text-muted">{project.title}</span>
                     </nav>
                     <div className="flex items-center gap-5">
-                        <span className="text-xs text-ink/60 tracking-wide whitespace-nowrap">{number} / {total}</span>
+                        <span className="text-small text-muted tracking-wide whitespace-nowrap">{number} / {total}</span>
                         <button
                             ref={closeRef}
                             type="button"
@@ -310,7 +310,7 @@ export default function ProjectView({ project, number, total, origin, onClose, o
                     <Layout project={project} number={number} media={media} onEnlarge={setEnlarged} />
                 </div>
 
-                <div className="flex items-center justify-between py-4 border-t border-ink/20 text-xs tracking-wide uppercase">
+                <div className="flex items-center justify-between py-4 border-t border-ink/20 text-small tracking-wide uppercase">
                     <button type="button" onClick={onPrev} className="hover:text-accent focus:outline-none focus-visible:text-accent">
                         ← föregående
                     </button>

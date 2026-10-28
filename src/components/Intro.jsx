@@ -21,7 +21,7 @@ export default function Intro() {
                             alt="Sara Cedernaes i fleecejacka, svartvitt porträtt"
                             className="relative w-full aspect-[3/4] object-cover mix-blend-multiply"
                         />
-                        <figcaption className="mt-2 text-xs text-ink/60">
+                        <figcaption className="mt-2 text-small text-muted">
                             hello
                         </figcaption>
                     </figure>

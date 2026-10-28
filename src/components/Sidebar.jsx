@@ -65,7 +65,7 @@ export default function Sidebar({ activeSection, sections, openProject, onShowPr
         <div>
           {/* Top margins line up the name's baseline with .section-title (index.css); update both together */}
           <a href="#start">
-            <h1 className="text-xl xl:text-3xl mt-[72px] lg:mt-[81px] xl:mt-[76px] mb-5 break-words fade-in">
+            <h1 className="text-2xl xl:text-3xl mt-[72px] lg:mt-[81px] xl:mt-[76px] mb-5 break-words fade-in">
               Sara<br />Cedernaes
             </h1>
           </a>
@@ -92,7 +92,7 @@ export default function Sidebar({ activeSection, sections, openProject, onShowPr
 
                 {/* With a project open, "på sistone" unfolds into that project's title */}
                 {section.id === 'portfolio' && openProject && (
-                  <p aria-current="page" className="!mb-0 ml-[18px] pl-3 border-l border-accent/40 py-1 text-sm leading-snug text-accent">
+                  <p aria-current="page" className="!mb-0 ml-[18px] pl-3 border-l border-accent/40 py-1 text-body leading-snug text-accent">
                     {projects.find((project) => project.id === openProject)?.title}
                   </p>
                 )}
@@ -102,7 +102,7 @@ export default function Sidebar({ activeSection, sections, openProject, onShowPr
         </nav>
 
         {/* Footer */}
-        <div className="text-xs text-ink/50 mt-auto">
+        <div className="text-small text-muted mt-auto">
           © {new Date().getFullYear()} Sara Cedernaes. All rights reserved.
         </div>
       </div>
