@@ -15,30 +15,28 @@ export default function About() {
     return (
         <section id="om-mig">
             <div ref={ref} className={`container reveal ${visible ? 'reveal-visible' : ''}`}>
-                <h2 className="section-title">
-                    Om mig
-                </h2>
-
-                {/* Grid: text, a red block and a strip of close-ups */}
+                {/* Grid: heading and text on the left, the red block beside them, close-ups below */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-8 md:gap-y-10 text-sm md:text-base leading-relaxed">
-                    <div className="md:col-span-2">
-                        <p className="!mb-0">
-                            Jag är ingenjör och matematiker från KTH och har arbetat inom utbildning och energi, ofta med produktutveckling i unga startups.
-                        </p>
+                    <div className="md:col-span-2 flex flex-col justify-between gap-8">
+                        <h2 className="section-title !pb-0">
+                            Om mig
+                        </h2>
+                        <div>
+                            <p>
+                                Jag är ingenjör och matematiker från KTH och har arbetat inom utbildning och energi, ofta med produktutveckling i unga startups.
+                            </p>
+                            <p className="!mb-0">
+                                Jag tycker om att bygga saker och lösa problem, men också att skapa fritt med händerna. Jag gillar att testa idéer och nörda ner mig i verktyg, material och tekniker.
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="md:col-span-2 md:row-span-2 bg-accent text-paper p-6 md:p-8 flex flex-col justify-between min-h-[16rem]">
+                    <div className="md:col-span-2 bg-accent text-paper p-6 md:p-8 flex flex-col justify-between min-h-[16rem] md:min-h-[24rem]">
                         <span className="text-xs">just nu</span>
                         <div>
                             <p className="font-display text-6xl md:text-7xl xl:text-8xl leading-none !mb-3">26—27</p>
                             <p className="!mb-0">Nyckelviksskolan</p>
                         </div>
-                    </div>
-
-                    <div className="md:col-span-2">
-                        <p className="!mb-0">
-                            Jag tycker om att bygga saker och lösa problem, men också att skapa fritt med händerna. Jag gillar att testa idéer och nörda ner mig i verktyg, material och tekniker.
-                        </p>
                     </div>
 
                     <div className="md:col-span-4 grid grid-cols-4 gap-2 md:gap-4 md:pt-6">
