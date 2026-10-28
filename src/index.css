@@ -58,7 +58,8 @@ p {
     margin-bottom: 1rem;
 }
 
-/* Work grid: 1×1 tiles are square, larger tiles span columns/rows */
+/* Work grid: 1×1 tiles are square, larger tiles span columns/rows.
+   From lg up it is two rows of five, one screen high (see overviewGrid.js) */
 .work-grid-wrap {
     container-type: inline-size;
     --cols: 2;
@@ -67,8 +68,13 @@ p {
 
 @media (min-width: 768px) {
     .work-grid-wrap {
-        --cols: 4;
         --gap: 1.25rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .work-grid-wrap {
+        --cols: 5;
     }
 }
 
