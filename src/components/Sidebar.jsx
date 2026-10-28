@@ -9,7 +9,7 @@ export default function Sidebar({ activeSection, sections, openProject, onShowPr
       {/* Mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-20 bg-paper border-b border-ink/15">
         <div className="flex items-center justify-between px-6 py-4">
-          <a href="#start"><h1 className="text-xl">sara cedernaes</h1></a>
+          <a href="#start"><h1 className="text-xl">Sara Cedernaes</h1></a>
           <button
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -65,8 +65,8 @@ export default function Sidebar({ activeSection, sections, openProject, onShowPr
         <div>
           {/* Top margins line up the name's baseline with .section-title (index.css); update both together */}
           <a href="#start">
-            <h1 className="text-2xl xl:text-3xl mt-[72px] lg:mt-[81px] xl:mt-[76px] mb-5 break-words fade-in">
-              sara<br />cedernaes
+            <h1 className="text-xl xl:text-3xl mt-[72px] lg:mt-[81px] xl:mt-[76px] mb-5 break-words fade-in">
+              Sara<br />Cedernaes
             </h1>
           </a>
         </div>
