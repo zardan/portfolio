@@ -25,7 +25,7 @@ export const projects = [
     },
     {
         id: 'yann',
-        title: 'YANN pottery gathering, 2026',
+        title: 'YANN pottery gathering',
         layout: 'gallery',
         cover: { src: 'images/yann-3.jpeg', size: 'large', cols: 2, rows: 2, order: 1 },
         images: [
