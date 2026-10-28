@@ -2,17 +2,33 @@ import React, { useEffect, useLayoutEffect, useRef } from 'react'
 
 const src = (path) => import.meta.env.BASE_URL + path
 
-// An image cell that fills its grid area, so every layout stays on a strict grid
-function Cell({ path, alt = '', className = '', position }) {
+const isVideo = (path) => /\.(mp4|webm|mov)$/i.test(path)
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+// An image cell that fills its grid area, so every layout stays on a strict grid.
+// A video path (.mp4, .webm, .mov) plays as a short silent loop, like a moving image.
+function Cell({ path, alt = '', className = '', position, poster }) {
+    const media = 'absolute inset-0 w-full h-full object-cover'
+    const style = position ? { objectPosition: position } : undefined
     return (
         <div className={`relative overflow-hidden bg-ink/5 ${className}`}>
-            <img
-                src={src(path)}
-                alt={alt}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={position ? { objectPosition: position } : undefined}
-            />
+            {isVideo(path) ? (
+                <video
+                    src={src(path)}
+                    poster={poster ? src(poster) : undefined}
+                    aria-label={alt}
+                    autoPlay={!reducedMotion()}
+                    controls={reducedMotion()}
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className={media}
+                    style={style}
+                />
+            ) : (
+                <img src={src(path)} alt={alt} loading="lazy" className={media} style={style} />
+            )}
         </div>
     )
 }
@@ -68,7 +84,8 @@ const textCols = { 1: 'md:col-span-1', 2: 'md:col-span-2', 3: 'md:col-span-3' }
 const textRows = { 1: 'md:row-span-1', 2: 'md:row-span-2', 3: 'md:row-span-3' }
 const textSpans = ({ cols, rows }) => `col-span-2 ${textCols[cols] ?? textCols[2]} ${textRows[rows] ?? textRows[2]}`
 
-// Images may be a path, or { src, cols, rows, position } to span more of the grid
+// Images may be a path, or { src, cols, rows, position, poster } to span more of the grid.
+// poster is a still image shown while a video loads.
 const asImage = (image) => (typeof image === 'string' ? { src: image } : image)
 
 function ViewGrid({ wide = false, children }) {
@@ -85,6 +102,7 @@ function Cover({ cover, project, className = '' }) {
             path={cover.src}
             alt={project.title}
             position={cover.position}
+            poster={cover.poster}
             className={`${spans(cover)} ${className}`}
         />
     )
@@ -98,6 +116,7 @@ function Images({ project, className = '' }) {
             path={image.src}
             alt={`${project.title}, bild ${i + 2}`}
             position={image.position}
+            poster={image.poster}
             className={`${spans(image)} ${className}`}
         />
     ))
@@ -165,6 +184,7 @@ function GalleryLayout({ project, number }) {
                                 path={image.src}
                                 alt={image.alt}
                                 position={image.position}
+                                poster={image.poster}
                                 className={spans(image)}
                             />
                         ))}

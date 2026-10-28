@@ -6,8 +6,23 @@
 // In the project view the cover and images sit in a grid of square cells (4 columns in 'hero' and
 // 'split', 3 beside the text in 'gallery', 2 on mobile) and can span columns and rows: the cover
 // defaults to cols: 2, rows: 2; an image can be a path (1×1) or { src, cols, rows }.
+// An image can also be a short video ('videos/name.mp4', or { src, poster, cols, rows }): it plays
+// muted and on a loop. The cover must be an image, since it is also the tile on the page.
 // In 'gallery', cover.order places the cover among the images (0 = first, the default)
 export const projects = [
+    {
+        id: 'lerstudie',
+        title: 'Formtagning på lerstudie',
+        layout: 'gallery',
+        cover: { src: 'images/lerstudie-1.jpeg', size: 'wide', cols: 2, rows: 1, position: 'center 65%' },
+        images: [
+            { src: 'videos/lerstudie.mp4', poster: 'images/lerstudie-2.jpeg', cols: 1, rows: 2 },
+            'images/lerstudie-5.jpeg',
+            { src: 'images/lerstudie-3.jpeg', position: 'center 30%' }
+        ],
+        description: 'Lerstudie efter modell, formtagen i gips med förlorad form. Mitt första arbete med gips som material. Nyckelviksskolan.',
+        tags: ['gips', 'lerstudie', 'nyckelviksskolan']
+    },
     {
         id: 'yann',
         title: 'YANN pottery gathering, 2026',
@@ -26,7 +41,7 @@ export const projects = [
         id: 'bowls',
         title: 'Skålar i stengods',
         layout: 'hero',
-        cover: { src: 'images/bowl-1.jpeg', size: 'large' },
+        cover: { src: 'images/bowl-1.jpeg', size: 'wide' },
         images: ['images/bowl-2.jpeg', 'images/bowl-3.jpeg'],
         description: '',
         tags: ['stengodslera', 'keramik']

@@ -52,6 +52,23 @@ Put the images in `public/images/`. Scale them down first (about 1600 px on the 
 magick input.jpg -auto-orient -resize "1600x1600>" -strip -quality 85 public/images/name-1.jpeg
 ```
 
+#### Short video clips
+
+A project can also show short clips that play silently on a loop, like a moving image. Put them in `public/videos/` and use them in `images` like any image (the cover has to be an image, since it is also the tile on the page). Keep them short and small: a few seconds, no sound, about 720 px on the longest side, ideally under 2–3 MB. iPhone `.mov` files are best converted to `.mp4` (H.264), which plays in every browser, e.g. with ffmpeg:
+
+```bash
+ffmpeg -i clip.mov -an -vf "scale='min(720,iw)':-2" -c:v libx264 -crf 26 -preset slow -movflags +faststart -map_metadata -1 public/videos/name.mp4
+ffmpeg -i public/videos/name.mp4 -frames:v 1 -q:v 3 public/images/name-poster.jpeg   # still shown while it loads
+```
+
+```js
+images: [
+    { src: 'videos/name.mp4', poster: 'images/name-poster.jpeg', cols: 1, rows: 2 }
+]
+```
+
+A clip counts as an image when choosing a layout and spans. Visitors who have reduced motion turned on get the clip paused, with play controls.
+
 ### 2. Add the project
 
 Add an object to `src/data/projects.js`. The order of the list is the order on the page (and the numbers 1., 2. …).
