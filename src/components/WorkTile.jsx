@@ -20,6 +20,9 @@ const corners = [
 export default function WorkTile({ project, number, onOpen, index = 0, style }) {
     const [tileRef, isVisible] = useReveal()
     const { cover } = project
+    const small = !cover.size || cover.size === 'small'
+    // Trying a light circle on a couple of tiles
+    const light = number === 3 || number === 6
 
     return (
         <button
@@ -40,9 +43,13 @@ export default function WorkTile({ project, number, onOpen, index = 0, style }) 
                 />
             </span>
 
-            {/* Red circle with the number, like the one on the intro photo */}
-            <span className={`absolute ${corners[index % corners.length]} w-12 h-12 md:w-16 md:h-16 rounded-full bg-accent text-paper text-xs md:text-sm font-normal flex items-center justify-center`}>
-                {number}
+            {/* Number circle, see-through like the red circle on the intro photo; smaller on 1×1 tiles */}
+            <span className={`absolute ${corners[index % corners.length]} ${small ? 'w-10 h-10 md:w-12 md:h-12 text-base md:text-lg' : 'w-14 h-14 md:w-20 md:h-20 text-xl md:text-3xl'} rounded-full flex items-center justify-center`}>
+                <span
+                    aria-hidden="true"
+                    className={`absolute inset-0 rounded-full ${light ? 'bg-paper/75' : 'bg-accent/80'}`}
+                />
+                <span className={`relative font-normal leading-none ${light ? 'text-accent' : 'text-paper'}`}>{number}</span>
             </span>
         </button>
     )
