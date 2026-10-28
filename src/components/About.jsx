@@ -1,23 +1,15 @@
 import React from 'react'
 import { useReveal } from '../hooks/useReveal'
 
-// A strip of close-ups from the work, instead of more words
-const details = [
-    { src: 'images/lerstudie-2.jpeg', alt: 'Gips som hälls över en lerfigur' },
-    { src: 'images/kudde.jpeg', alt: 'Tuftad kudde' },
-    { src: 'images/bowl-2.jpeg', alt: 'Skål med stänkt glasyr' },
-    { src: 'images/yann-5.jpeg', alt: 'Kopp bränd i vedugn' }
-]
-
 export default function About() {
     const [ref, visible] = useReveal()
 
     return (
         <section id="om-mig">
             <div ref={ref} className={`container reveal ${visible ? 'reveal-visible' : ''}`}>
-                {/* Grid: heading and text on the left, the red block beside them, close-ups below */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-8 md:gap-y-10 text-sm md:text-base leading-relaxed">
-                    <div className="md:col-span-2 flex flex-col justify-between gap-8">
+                {/* Grid: heading and text beside two photos, then and now, with the red block */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 text-sm md:text-base leading-relaxed">
+                    <div className="col-span-2 md:row-span-2 flex flex-col justify-between gap-8 pb-4 md:pb-0 md:pr-5">
                         <h2 className="section-title !pb-0">
                             Om mig
                         </h2>
@@ -31,19 +23,25 @@ export default function About() {
                         </div>
                     </div>
 
-                    <div className="md:col-span-2 bg-accent text-paper p-6 md:p-8 flex flex-col justify-between min-h-[16rem] md:min-h-[24rem]">
+                    <img
+                        src="images/om-mig-kth.jpeg"
+                        alt="KTH:s tegelfasad med vildvin i höstfärger"
+                        className="col-span-2 w-full aspect-[4/3] object-cover"
+                    />
+
+                    <div className="[container-type:inline-size] aspect-square bg-accent text-paper p-4 lg:p-6 flex flex-col justify-between">
                         <span className="text-xs">just nu</span>
                         <div>
-                            <p className="font-display text-6xl md:text-7xl xl:text-8xl leading-none !mb-3">26—27</p>
-                            <p className="!mb-0">Nyckelviksskolan</p>
+                            <p className="font-display text-[21cqw] whitespace-nowrap leading-none !mb-2">26—27</p>
+                            <p className="text-xs lg:text-sm !mb-0">Nyckelviksskolan</p>
                         </div>
                     </div>
 
-                    <div className="md:col-span-4 grid grid-cols-4 gap-2 md:gap-4 md:pt-6">
-                        {details.map((d) => (
-                            <img key={d.src} src={d.src} alt={d.alt} loading="lazy" className="w-full aspect-square object-cover" />
-                        ))}
-                    </div>
+                    <img
+                        src="images/om-mig-ugn.jpeg"
+                        alt="Lergods i en vedeldad jordugn"
+                        className="w-full aspect-square object-cover object-[50%_45%]"
+                    />
                 </div>
             </div>
         </section>
