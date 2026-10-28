@@ -14,12 +14,11 @@ export const projects = [
         id: 'lerstudie',
         title: 'Formtagning på lerstudie',
         layout: 'gallery',
-        cover: { src: 'images/lerstudie-1.jpeg', size: 'large' },
+        cover: { src: 'images/lerstudie-1.jpeg', size: 'large', cols: 2, rows: 1, position: 'center 65%' },
         images: [
             { src: 'videos/lerstudie.mp4', poster: 'images/lerstudie-2.jpeg', cols: 1, rows: 2 },
-            { src: 'images/lerstudie-3.jpeg', position: 'center 30%' },
-            'images/lerstudie-4.jpeg',
-            'images/lerstudie-5.jpeg'
+            'images/lerstudie-5.jpeg',
+            { src: 'images/lerstudie-3.jpeg', position: 'center 30%' }
         ],
         description: 'Lerstudie efter modell, formtagen i gips med förlorad form. Mitt första arbete med gips som material. Nyckelviksskolan.',
         tags: ['gips', 'lerstudie', 'nyckelviksskolan']
