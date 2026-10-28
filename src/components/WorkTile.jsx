@@ -30,7 +30,6 @@ export default function WorkTile({ project, number, onOpen, index = 0, style }) 
             ref={tileRef}
             onClick={onOpen}
             aria-label={`Visa projekt: ${project.title}`}
-            data-cursor="öppna"
             className={`reveal group relative text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${spans[cover.size] ?? ''} ${isVisible ? 'reveal-visible' : ''}`}
             style={{ transitionDelay: `${index * 60}ms`, ...style }}
         >

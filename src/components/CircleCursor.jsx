@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-// The red circle follows the mouse with a slight delay. Over an element with data-cursor="<word>"
-// it grows into a large see-through circle with that word in it (like the number circles on the
-// tiles), over other links and buttons it swells a little. Only with a mouse, and not for
-// visitors who have turned off animations.
+// The red circle follows the mouse with a slight delay and grows to twice its size over links,
+// buttons, work tiles and project images. Only with a mouse, and not for visitors who have
+// turned off animations.
 const enabled = () =>
     window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -11,12 +10,11 @@ const enabled = () =>
 export default function CircleCursor() {
     const ref = useRef(null)
     const [on] = useState(enabled)
-    const [state, setState] = useState({ kind: 'dot', label: '' })
+    const [hover, setHover] = useState(false)
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
         if (!on) return
-        document.documentElement.classList.add('has-circle-cursor')
         const target = { x: -100, y: -100 }
         const pos = { x: -100, y: -100 }
         let frame
@@ -34,13 +32,7 @@ export default function CircleCursor() {
             setVisible(true)
         }
 
-        const onOver = (e) => {
-            const labelled = e.target.closest?.('[data-cursor]')
-            if (labelled) setState({ kind: 'label', label: labelled.dataset.cursor })
-            else if (e.target.closest?.('a, button')) setState({ kind: 'link', label: '' })
-            else setState({ kind: 'dot', label: '' })
-        }
-
+        const onOver = (e) => setHover(Boolean(e.target.closest?.('a, button')))
         const onLeave = () => setVisible(false)
 
         frame = requestAnimationFrame(tick)
@@ -52,17 +44,10 @@ export default function CircleCursor() {
             window.removeEventListener('mousemove', onMove)
             document.removeEventListener('mouseover', onOver)
             document.documentElement.removeEventListener('mouseleave', onLeave)
-            document.documentElement.classList.remove('has-circle-cursor')
         }
     }, [on])
 
     if (!on) return null
-
-    const sizes = {
-        dot: 'w-3 h-3 bg-accent',
-        link: 'w-10 h-10 bg-accent/25',
-        label: 'w-24 h-24 bg-accent/80'
-    }
 
     return (
         <div
@@ -71,12 +56,8 @@ export default function CircleCursor() {
             className={`fixed left-0 top-0 z-[80] pointer-events-none transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0'}`}
         >
             <div
-                className={`-translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center transition-all duration-300 ease-out ${sizes[state.kind]}`}
-            >
-                <span className={`text-paper text-sm transition-opacity duration-200 ${state.kind === 'label' ? 'opacity-100' : 'opacity-0'}`}>
-                    {state.label}
-                </span>
-            </div>
+                className={`-translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-300 ease-out ${hover ? 'w-6 h-6 bg-accent/60' : 'w-3 h-3 bg-accent'}`}
+            />
         </div>
     )
 }

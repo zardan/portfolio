@@ -17,7 +17,6 @@ function Cell({ path, alt = '', className = '', position, poster, onOpen }) {
             type="button"
             onClick={onOpen}
             aria-label={`Förstora: ${alt}`}
-            data-cursor="förstora"
             className={`relative block overflow-hidden bg-ink/5 cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${className}`}
         >
             {isVideo(path) ? (

@@ -78,7 +78,6 @@ export default function Portfolio({ view }) {
               <button
                 type="button"
                 aria-label={`Visa fler projekt (${hidden.length} till)`}
-                data-cursor="fler"
                 onClick={(e) => {
                   setOrigin(e.currentTarget.getBoundingClientRect())
                   open(hidden[0].id)
