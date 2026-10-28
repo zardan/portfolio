@@ -18,7 +18,7 @@ export default function Intro() {
                         />
                         <img
                             src="images/sara.jpeg"
-                            alt="Sara Cedernaes i keps och jeansjacka"
+                            alt="Sara Cedernaes i fleecejacka, svartvitt porträtt"
                             className="relative w-full aspect-[3/4] object-cover mix-blend-multiply"
                         />
                         <figcaption className="mt-2 text-xs text-ink/60">
