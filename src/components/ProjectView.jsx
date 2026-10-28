@@ -263,7 +263,7 @@ export default function ProjectView({ project, number, total, origin, onClose, o
             className="fixed inset-0 md:left-64 lg:left-72 xl:left-80 z-50 bg-paper overflow-y-auto overscroll-contain"
         >
             <div className="container min-h-full flex flex-col">
-                <div className="flex items-center justify-between gap-6 py-4 border-b border-ink/20">
+                <div className="flex items-center justify-between gap-6 pt-6 pb-4 md:pt-10 border-b border-ink/20">
                     {/* Breadcrumb: back to the grid, then the open project */}
                     <nav aria-label="Brödsmulor" className="flex items-center gap-3 min-w-0 font-display text-base md:text-lg leading-none">
                         <button
@@ -293,7 +293,7 @@ export default function ProjectView({ project, number, total, origin, onClose, o
                     </div>
                 </div>
 
-                <div className="flex-1 py-8 md:py-12">
+                <div className="flex-1 pt-6 pb-8 md:pb-12">
                     <Layout project={project} number={number} />
                 </div>
 
