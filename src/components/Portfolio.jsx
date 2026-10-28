@@ -32,17 +32,17 @@ export default function Portfolio({ view }) {
   const next = useCallback(() => show(projects[(openIndex + 1) % projects.length].id), [openIndex, show])
 
   const layout = overviewLayout(projects)
-  // Projects that don't fit; "…" opens the first of them, and the project view's sidebar lists them all
+  // Projects that don't fit; "…" opens the first of them, and the project view's arrows go through them all
   const hidden = projects.filter((p) => !layout.tiles.some((t) => t.project === p))
 
   // In the grid's top-left cells on a wide screen (like om mig), above the grid otherwise
   const title = (
     <div
       ref={titleRef}
-      className={`reveal [container-type:inline-size] ${wide ? 'bg-accent p-5 xl:p-6' : ''} ${titleVisible ? 'reveal-visible' : ''}`}
+      className={`reveal [container-type:inline-size] ${titleVisible ? 'reveal-visible' : ''}`}
       style={wide ? area(heading) : undefined}
     >
-      <h2 className={`section-title ${wide ? '!pb-0 !text-paper' : ''}`}>
+      <h2 className={`section-title ${wide ? '!pb-0' : ''}`}>
         {/* Shrinks to fit its cells: "sistone" is 5.2em wide */}
         <span className="block text-[min(1em,19cqw)]">på sistone</span>
       </h2>

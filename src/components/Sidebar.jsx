@@ -90,28 +90,11 @@ export default function Sidebar({ activeSection, sections, openProject, onShowPr
                   </span>
                 </a>
 
-                {/* With a project open, "på sistone" unfolds into its projects, the open one marked */}
+                {/* With a project open, "på sistone" unfolds into that project's title */}
                 {section.id === 'portfolio' && openProject && (
-                  <ul className="ml-[18px] pl-3 border-l border-accent/40 space-y-1.5 py-1">
-                    {projects.map((project) => {
-                      const isOpen = project.id === openProject
-                      return (
-                        <li key={project.id}>
-                          <a
-                            href={`#portfolio/${project.id}`}
-                            aria-current={isOpen ? 'page' : undefined}
-                            onClick={(e) => {
-                              e.preventDefault()
-                              onShowProject(project.id)
-                            }}
-                            className={`block text-sm leading-snug ${isOpen ? 'text-accent' : 'text-ink/60 hover:text-ink'}`}
-                          >
-                            {project.title}
-                          </a>
-                        </li>
-                      )
-                    })}
-                  </ul>
+                  <p aria-current="page" className="!mb-0 ml-[18px] pl-3 border-l border-accent/40 py-1 text-sm leading-snug text-accent">
+                    {projects.find((project) => project.id === openProject)?.title}
+                  </p>
                 )}
               </React.Fragment>
             )
