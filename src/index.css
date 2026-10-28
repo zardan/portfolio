@@ -154,6 +154,11 @@ p {
     animation: fadeInUp 0.6s ease-out both;
 }
 
+/* With the red circle cursor (CircleCursor.jsx), the circle takes the arrow's place over tiles and images */
+.has-circle-cursor [data-cursor] {
+    cursor: none;
+}
+
 /* Sidebar nav link hover */
 .nav-link {
     transition: letter-spacing 0.3s ease;

@@ -6,6 +6,7 @@ import Portfolio from './components/Portfolio'
 import CV from './components/CV'
 import Blog from './components/Blog'
 import Contact from './components/Contact'
+import CircleCursor from './components/CircleCursor'
 import { useActiveSection } from './hooks/useActiveSection'
 import { useProjectView } from './hooks/useProjectView'
 
@@ -44,6 +45,8 @@ export default function App() {
         {/* <Blog /> */}
         <Contact />
       </main>
+
+      <CircleCursor />
     </div>
   )
 }
