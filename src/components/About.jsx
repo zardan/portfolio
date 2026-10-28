@@ -8,17 +8,17 @@ export default function About() {
         <section id="om-mig">
             <div ref={ref} className={`container reveal ${visible ? 'reveal-visible' : ''}`}>
                 <h2 className="section-title">
-                    om mig
+                    Om mig
                 </h2>
                 <div className="max-w-2xl text-sm md:text-base leading-relaxed">
                     <p>
                         Jag är ingenjör och matematiker från KTH och har arbetat inom utbildning och energi, ofta med produktutveckling i unga startups.
                     </p>
                     <p>
-                        Jag tycker om att bygga saker och lösa problem, men också om att skapa fritt med händerna. På senare tid har det blivit mycket hantverk i form av keramik, stickning och tuftning.
+                        Jag tycker om att bygga saker och lösa problem, men också om att skapa fritt med händerna. På senare tid har det blivit mycket hantverk i form av keramik, stickning och tuftning. Jag gillar att testa idéer, nörda ner mig i verktyg, material och tekniker.
                     </p>
                     <p>
-                        För mig liknar ingenjörsarbete och hantverk varandra. Båda handlar om att testa idéer, nörda ner sig i verktyg, material och tekniker. Samtidigt har de förstås olika processer och syften.
+                        Just nu pluggar jag på Nyckelviksskolan, 2026–2027. Här samlar jag lite vad jag har gjort tidigare, och delar mina senaste projekt.
                     </p>
                 </div>
             </div>
