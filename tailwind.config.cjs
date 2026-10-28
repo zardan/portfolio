@@ -14,8 +14,8 @@ module.exports = {
       },
       // Two text sizes besides the headings: body for reading, small for captions and labels
       fontSize: {
-        body: ['0.875rem', { lineHeight: '1.6' }],
-        small: ['0.75rem', { lineHeight: '1.5' }]
+        body: ['1rem', { lineHeight: '1.6' }],
+        small: ['0.875rem', { lineHeight: '1.5' }]
       },
       fontFamily: {
         display: ['"Major Mono Display"', 'monospace'],
