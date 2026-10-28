@@ -119,14 +119,9 @@ export default function Sidebar({ activeSection, sections, openProject, onShowPr
         </nav>
 
         {/* Footer */}
-        <a
-          href="https://www.instagram.com/saracedernaes/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-auto text-xs text-ink/60 hover:text-accent transition-colors"
-        >
-          @saracedernaes ↗
-        </a>
+        <div className="text-xs text-ink/50 mt-auto">
+          © {new Date().getFullYear()} Sara Cedernaes. All rights reserved.
+        </div>
       </div>
     </>
   )
