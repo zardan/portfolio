@@ -66,11 +66,11 @@ function Specs({ project }) {
     const rows = specLabels.filter((label) => project.specs?.[label])
     if (!rows.length) return null
     return (
-        <dl className="!mb-0 text-small grid grid-cols-[5.5rem_1fr] gap-x-3 gap-y-1 bg-accent/15 px-4 py-3">
+        <dl className="!mb-0 text-small grid grid-cols-[5.5rem_1fr] gap-x-3 gap-y-1">
             {rows.map((label) => (
                 <React.Fragment key={label}>
                     <dt className="text-muted">{label}</dt>
-                    <dd>{project.specs[label]}</dd>
+                    <dd className="text-accent">{project.specs[label]}</dd>
                 </React.Fragment>
             ))}
         </dl>
