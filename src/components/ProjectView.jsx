@@ -59,12 +59,21 @@ function Title({ project, className = '' }) {
     )
 }
 
-function Tags({ project }) {
-    if (!project.tags?.length) return null
+// Material, technique and year, set like a datasheet
+const specLabels = ['material', 'teknik', 'år']
+
+function Specs({ project }) {
+    const rows = specLabels.filter((label) => project.specs?.[label])
+    if (!rows.length) return null
     return (
-        <p className="!mb-0 text-small text-muted tracking-wide uppercase">
-            {project.tags.join(' · ')}
-        </p>
+        <dl className="!mb-0 text-small grid grid-cols-[5.5rem_1fr] gap-x-3 gap-y-1">
+            {rows.map((label) => (
+                <React.Fragment key={label}>
+                    <dt className="text-muted">{label}</dt>
+                    <dd className="text-accent">{project.specs[label]}</dd>
+                </React.Fragment>
+            ))}
+        </dl>
     )
 }
 
@@ -157,7 +166,7 @@ function HeroLayout({ project, number, media, onEnlarge }) {
             <div className={`${textBeside(project, cover)} flex flex-col gap-5 order-2 md:order-none`}>
                 <ProjectNumber number={number} />
                 <Title project={project} className="text-2xl md:text-4xl" />
-                <Tags project={project} />
+                <Specs project={project} />
                 <Description project={project} className="md:mt-auto" />
             </div>
             <Cover media={media} onEnlarge={onEnlarge} className="order-1 md:order-none" />
@@ -174,7 +183,7 @@ function SplitLayout({ project, number, media, onEnlarge }) {
             <Cover media={media} onEnlarge={onEnlarge} />
             <div className={`${textBeside(project, cover)} flex flex-col gap-5`}>
                 <Title project={project} className="text-2xl md:text-4xl" />
-                <Tags project={project} />
+                <Specs project={project} />
                 <Description project={project} />
                 <ProjectNumber number={number} className="md:mt-auto md:self-end" />
             </div>
@@ -201,7 +210,7 @@ function GalleryLayout({ project, number, media, onEnlarge }) {
                     </ViewGrid>
                 </div>
                 <div className="md:col-span-3 flex flex-col gap-5">
-                    <Tags project={project} />
+                    <Specs project={project} />
                     <Description project={project} />
                 </div>
             </div>
