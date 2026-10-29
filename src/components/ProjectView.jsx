@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Lightbox from './Lightbox'
+import Picture from './Picture'
 
 const src = (path) => import.meta.env.BASE_URL + path
 
@@ -34,7 +35,7 @@ function Cell({ path, alt = '', className = '', position, poster, onOpen }) {
                     style={style}
                 />
             ) : (
-                <img src={src(path)} alt={alt} loading="lazy" className={media} style={style} />
+                <Picture src={path} alt={alt} sizes="(min-width: 768px) 40vw, 100vw" className={media} style={style} />
             )}
         </button>
     )

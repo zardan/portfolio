@@ -52,6 +52,8 @@ Put the images in `public/images/`. Scale them down first (about 1600 px on the 
 magick input.jpg -auto-orient -resize "1600x1600>" -strip -quality 85 public/images/name-1.jpeg
 ```
 
+Nothing else is needed for the smaller versions: `npm run dev` and `npm run build` first run `scripts/optimize-images.mjs`, which makes WebP copies at 640 px, 1280 px and full width in `public/images/opt/` and notes each photo's main colour in `src/data/images.json` (both generated, not committed). The site loads the size that fits the screen and shows the colour until the photo has loaded. Run `npm run images` to make them by hand.
+
 #### Short video clips
 
 A project can also show short clips that play silently on a loop, like a moving image. Put them in `public/videos/` and use them in `images` like any image (the cover has to be an image, since it is also the tile on the page). Keep them short and small: a few seconds, no sound, about 720 px on the longest side, ideally under 2–3 MB. iPhone `.mov` files are best converted to `.mp4` (H.264), which plays in every browser, e.g. with ffmpeg:

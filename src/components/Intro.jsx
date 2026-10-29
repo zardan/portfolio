@@ -1,4 +1,5 @@
 import React from 'react'
+import Picture from './Picture'
 
 export default function Intro() {
     return (
@@ -16,10 +17,12 @@ export default function Intro() {
                             aria-hidden="true"
                             className="absolute -left-10 -top-10 md:-left-16 md:-top-16 w-28 h-28 md:w-44 md:h-44 rounded-full bg-accent"
                         />
-                        <img
+                        <Picture
                             src="images/sara.jpeg"
                             alt="Sara Cedernaes i fleecejacka, svartvitt porträtt"
-                            className="relative w-full aspect-[3/4] object-cover mix-blend-multiply"
+                            sizes="(min-width: 768px) 35vw, 80vw"
+                            loading="eager"
+                            className="relative w-full h-auto aspect-[3/4] object-cover mix-blend-multiply"
                         />
                         <figcaption className="mt-2 text-small text-muted">
                             hello

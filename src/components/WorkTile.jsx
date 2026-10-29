@@ -1,5 +1,6 @@
 import React from 'react'
 import { useReveal } from '../hooks/useReveal'
+import Picture from './Picture'
 
 const spans = {
     small: '',
@@ -34,11 +35,10 @@ export default function WorkTile({ project, number, onOpen, index = 0, style }) 
             style={{ transitionDelay: `${index * 60}ms`, ...style }}
         >
             <span className="absolute inset-0 overflow-hidden bg-ink/5">
-                <img
-                    src={import.meta.env.BASE_URL + cover.src}
-                    alt=""
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                <Picture
+                    src={cover.src}
+                    sizes={small ? '(min-width: 1024px) 15vw, 50vw' : '(min-width: 1024px) 30vw, 100vw'}
+                    className="w-full h-full object-cover group-hover:scale-105"
                     style={cover.position ? { objectPosition: cover.position } : undefined}
                 />
             </span>

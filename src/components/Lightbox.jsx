@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import Picture from './Picture'
 
 const src = (path) => import.meta.env.BASE_URL + path
 const isVideo = (path) => /\.(mp4|webm|mov)$/i.test(path)
@@ -80,12 +81,14 @@ export default function Lightbox({ media, index, onIndex, onClose }) {
                         className="max-w-full max-h-full object-contain"
                     />
                 ) : (
-                    <img
+                    <Picture
                         key={item.src}
-                        src={src(item.src)}
+                        src={item.src}
                         alt={item.alt}
+                        loading="eager"
+                        intrinsic={false}
                         onClick={(e) => e.stopPropagation()}
-                        className="max-w-full max-h-full object-contain fade-in"
+                        className="max-w-full max-h-full object-contain"
                     />
                 )}
 
