@@ -45,7 +45,7 @@ function Cell({ path, alt = '', className = '', position, poster, onOpen }) {
 function ProjectNumber({ number, className = '' }) {
     return (
         <span className={`relative shrink-0 w-16 h-16 md:w-24 md:h-24 rounded-full flex items-center justify-center ${className}`}>
-            <span aria-hidden="true" className="absolute inset-0 rounded-full bg-accent/80" />
+            <span aria-hidden="true" className="absolute inset-0 rounded-full bg-accent/100" />
             <span className="relative font-normal leading-none text-paper text-2xl md:text-4xl">{number}</span>
         </span>
     )
