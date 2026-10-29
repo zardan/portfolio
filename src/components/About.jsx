@@ -43,8 +43,8 @@ export default function About() {
 
                     <div>
                         <Picture
-                            src="images/om-mig-ugn.jpeg"
-                            alt="Lergods i en vedeldad jordugn"
+                            src="images/om-mig-tuftning.jpeg"
+                            alt="Jag som tuftar"
                             sizes="(min-width: 768px) 20vw, 50vw"
                             className="w-full h-auto aspect-square object-cover object-[50%_45%]"
                         />
