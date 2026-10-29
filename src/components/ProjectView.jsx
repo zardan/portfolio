@@ -41,10 +41,12 @@ function Cell({ path, alt = '', className = '', position, poster, onOpen }) {
     )
 }
 
+// The project's number in a see-through red circle, like the number circles on the work tiles
 function ProjectNumber({ number, className = '' }) {
     return (
-        <span className={`block font-display font-bold text-accent leading-none ${className}`}>
-            {number}.
+        <span className={`relative shrink-0 w-16 h-16 md:w-24 md:h-24 rounded-full flex items-center justify-center ${className}`}>
+            <span aria-hidden="true" className="absolute inset-0 rounded-full bg-accent/80" />
+            <span className="relative font-normal leading-none text-paper text-2xl md:text-4xl">{number}</span>
         </span>
     )
 }
@@ -153,7 +155,7 @@ function HeroLayout({ project, number, media, onEnlarge }) {
     return (
         <ViewGrid wide>
             <div className={`${textBeside(project, cover)} flex flex-col gap-5 order-2 md:order-none`}>
-                <ProjectNumber number={number} className="text-6xl md:text-8xl" />
+                <ProjectNumber number={number} />
                 <Title project={project} className="text-2xl md:text-4xl" />
                 <Tags project={project} />
                 <Description project={project} className="md:mt-auto" />
@@ -174,7 +176,7 @@ function SplitLayout({ project, number, media, onEnlarge }) {
                 <Title project={project} className="text-2xl md:text-4xl" />
                 <Tags project={project} />
                 <Description project={project} />
-                <ProjectNumber number={number} className="text-6xl md:text-8xl md:mt-auto md:self-end" />
+                <ProjectNumber number={number} className="md:mt-auto md:self-end" />
             </div>
             <Images media={media} onEnlarge={onEnlarge} />
         </ViewGrid>
@@ -188,7 +190,7 @@ function GalleryLayout({ project, number, media, onEnlarge }) {
         <>
             <div className="flex items-end justify-between gap-6">
                 <Title project={project} className="text-2xl md:text-5xl" />
-                <ProjectNumber number={number} className="text-5xl md:text-8xl shrink-0" />
+                <ProjectNumber number={number} />
             </div>
             <div className="grid md:grid-cols-12 gap-6 md:gap-8 mt-6 md:mt-8">
                 <div className="md:col-span-9">
