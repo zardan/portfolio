@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-// The red circle follows the mouse with a slight delay and grows to twice its size over links,
-// buttons, work tiles and project images. Only with a mouse, and not for visitors who have
-// turned off animations.
+// The red circle is the mouse pointer: the arrow is hidden and the dot sits exactly where the
+// pointer is, growing to twice its size over links, buttons, work tiles and project images.
+// Only with a mouse, and not for visitors who have turned off animations.
 const enabled = () =>
     window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -15,32 +15,21 @@ export default function CircleCursor() {
 
     useEffect(() => {
         if (!on) return
-        const target = { x: -100, y: -100 }
-        const pos = { x: -100, y: -100 }
-        let frame
-
-        const tick = () => {
-            pos.x += (target.x - pos.x) * 0.2
-            pos.y += (target.y - pos.y) * 0.2
-            if (ref.current) ref.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`
-            frame = requestAnimationFrame(tick)
-        }
+        document.documentElement.classList.add('circle-cursor')
 
         const onMove = (e) => {
-            target.x = e.clientX
-            target.y = e.clientY
+            if (ref.current) ref.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`
             setVisible(true)
         }
 
         const onOver = (e) => setHover(Boolean(e.target.closest?.('a, button')))
         const onLeave = () => setVisible(false)
 
-        frame = requestAnimationFrame(tick)
         window.addEventListener('mousemove', onMove)
         document.addEventListener('mouseover', onOver)
         document.documentElement.addEventListener('mouseleave', onLeave)
         return () => {
-            cancelAnimationFrame(frame)
+            document.documentElement.classList.remove('circle-cursor')
             window.removeEventListener('mousemove', onMove)
             document.removeEventListener('mouseover', onOver)
             document.documentElement.removeEventListener('mouseleave', onLeave)
@@ -56,7 +45,7 @@ export default function CircleCursor() {
             className={`fixed left-0 top-0 z-[80] pointer-events-none transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0'}`}
         >
             <div
-                className={`-translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-300 ease-out ${hover ? 'w-6 h-6 bg-accent/60' : 'w-3 h-3 bg-accent'}`}
+                className={`-translate-x-1/2 -translate-y-1/2 rounded-full transition-[width,height,background-color] duration-200 ease-out ${hover ? 'w-6 h-6 bg-accent/60' : 'w-3 h-3 bg-accent'}`}
             />
         </div>
     )
