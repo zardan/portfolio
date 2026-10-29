@@ -9,6 +9,7 @@
 // An image can also be a short video ('videos/name.mp4', or { src, poster, cols, rows }): it plays
 // muted and on a loop. The cover must be an image, since it is also the tile on the page.
 // In 'gallery', cover.order places the cover among the images (0 = first, the default)
+// specs: material, teknik and år, shown as a short datasheet under the title
 export const projects = [
     {
         id: 'lerstudie',
@@ -21,7 +22,7 @@ export const projects = [
             { src: 'images/lerstudie-3.jpeg', position: 'center 30%' }
         ],
         description: 'Lerstudie efter modell, formtagen i gips med förlorad form. Mitt första arbete med gips som material. Nyckelviksskolan.',
-        tags: ['gips', 'lerstudie', 'nyckelviksskolan']
+        specs: { material: 'keramik, gips', teknik: 'förlorad form', år: 2026 }
     },
     {
         id: 'yann',
@@ -35,7 +36,7 @@ export const projects = [
             'images/yann-5.jpeg'
         ],
         description: 'Naturlera från platsen, formad för hand och bränd i en vedeldad ugn som vi byggde och eldade tillsammans. Chiang Dao, Thailand.',
-        tags: ['keramik', 'naturlera']
+        specs: { material: 'naturlera', teknik: 'handbyggd, vedbränd', år: 2026 }
     },
     {
         id: 'bowls',
@@ -44,7 +45,7 @@ export const projects = [
         cover: { src: 'images/bowl-1.jpeg', size: 'wide' },
         images: ['images/bowl-2.jpeg', 'images/bowl-3.jpeg'],
         description: '',
-        tags: ['stengodslera', 'keramik']
+        specs: { material: 'stengodslera', teknik: 'drejade', år: 2026 }
     },
     {
         id: 'candleholders',
@@ -53,7 +54,7 @@ export const projects = [
         cover: { src: 'images/candles.jpeg', size: 'small' },
         images: [],
         description: '',
-        tags: ['keramik']
+        specs: { material: 'stengodslera', teknik: 'handbyggda, transparent glasyr', år: 2025 }
     },
     {
         id: 'annie',
@@ -62,7 +63,7 @@ export const projects = [
         cover: { src: 'images/annie-2.jpeg', size: 'wide', position: 'center 60%' },
         images: ['images/annie-1.jpeg'],
         description: '',
-        tags: ['keramik']
+        specs: { material: 'stengodslera (pricklera)', teknik: 'handbyggd', år: 2026 }
     },
     {
         id: 'kudde',
@@ -71,6 +72,6 @@ export const projects = [
         cover: { src: 'images/kudde.jpeg', size: 'small' },
         images: [],
         description: '',
-        tags: ['textil', 'tuftning']
+        specs: { material: 'ull', teknik: 'tuftning, öglelugg', år: 2025 }
     }
 ]

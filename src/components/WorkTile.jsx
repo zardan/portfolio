@@ -17,7 +17,7 @@ const corners = [
     'bottom-3 left-3 md:bottom-4 md:left-4'
 ]
 
-// Only the cover and its number: title and tags show when the project is opened
+// Only the cover and its number: title and specs show when the project is opened
 export default function WorkTile({ project, number, onOpen, index = 0, style }) {
     const [tileRef, isVisible] = useReveal()
     const { cover } = project

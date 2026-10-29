@@ -83,7 +83,7 @@ Add an object to `src/data/projects.js`. The order of the list is the order on t
     cover: { src: 'images/bowl-1.jpeg', size: 'large' },
     images: ['images/bowl-2.jpeg', 'images/bowl-3.jpeg'],
     description: 'Optional text shown in the project view.',
-    tags: ['stengodslera', 'keramik']
+    specs: { material: 'stengodslera', teknik: 'drejade', år: 2026 }   // shown under the title; leave out any you don't need
 }
 ```
 
@@ -115,7 +115,7 @@ images: [
 | --- | --- |
 | `hero` | 4 columns. Text on the left, cover on the right, other images beside and below. Without a description the text takes one row and the images fill the space under it, next to the cover. |
 | `split` | 4 columns. Cover on the left, text on the right with the project number in the bottom corner, other images below. Without a description the text takes one row, as in `hero`. |
-| `gallery` | Title on top, then a 3-column image grid with the tags and description in a narrow column beside it. `cover.order` moves the cover further into the image list (`order: 1` = second image). |
+| `gallery` | Title on top, then a 3-column image grid with the specs and description in a narrow column beside it. `cover.order` moves the cover further into the image list (`order: 1` = second image). |
 
 ## Choosing a layout
 
