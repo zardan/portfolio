@@ -19,14 +19,11 @@ export default function Intro() {
                         />
                         <Picture
                             src="images/sara.jpeg"
-                            alt="Sara Cedernaes i fleecejacka, svartvitt porträtt"
+                            alt="Sara Cedernaes vid havet med en keramikskål i famnen"
                             sizes="(min-width: 768px) 35vw, 80vw"
                             loading="eager"
-                            className="relative w-full h-auto aspect-[3/4] object-cover mix-blend-multiply"
+                            className="relative w-full h-auto aspect-[2/3] object-cover mix-blend-multiply"
                         />
-                        <figcaption className="mt-2 text-small text-muted">
-                            hello
-                        </figcaption>
                     </figure>
                 </div>
             </div>
