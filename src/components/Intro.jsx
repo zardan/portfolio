@@ -24,9 +24,6 @@ export default function Intro() {
                             loading="eager"
                             className="relative w-full h-auto aspect-[2/3] object-cover mix-blend-multiply"
                         />
-                        <figcaption className="mt-2 text-small text-muted">
-                            hello
-                        </figcaption>
                     </figure>
                 </div>
             </div>
